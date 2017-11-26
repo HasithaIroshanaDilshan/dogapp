@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:weightSum="1"
+    android:background="#d4383838">
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.03"
+        android:weightSum="1"
+        android:layout_marginTop="10dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="New Dog"
+            android:id="@+id/textView6"
+            android:textSize="35sp"
+            android:layout_marginLeft="20dp"
+            android:layout_gravity="center"
+            android:layout_weight="0.11"
+            android:textColor="@android:color/white" />
+
+        <ImageView
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:id="@+id/imageView"
+            android:layout_gravity="center|right"
+            android:background="@drawable/dog"/>
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Location"
+        android:id="@+id/textView7"
+        android:layout_weight="0.03"
+        android:layout_marginLeft="20dp"
+        android:textSize="20dp"
+        android:textColor="@android:color/darker_gray" />
+
+    <Button
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:text="@string/gpsbtntxt"
+        android:id="@+id/gpsbtn"
+        android:layout_gravity="center_horizontal"
+        android:layout_weight="0.08"
+        android:background="@drawable/hover"
+        android:layout_marginTop="30dp" />
+
+    <Button
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:text="get from Map"
+        android:id="@+id/mapbtn"
+        android:layout_gravity="center_horizontal"
+        android:layout_weight="0.08"
+        android:background="@drawable/hover"
+        android:layout_marginTop="30dp" />
+
+    <TextView
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="*,*"
+        android:id="@+id/textView8"
+        android:layout_gravity="center"
+        android:layout_weight="0.03"
+        android:layout_marginTop="30dp"
+        android:textSize="30sp" />
+
+    <Button
+        android:layout_width="159dp"
+        android:layout_height="wrap_content"
+        android:text="Next"
+        android:id="@+id/next1btn"
+        android:layout_gravity="right"
+        android:layout_weight="0.08"
+        android:layout_marginTop="30dp"
+        android:layout_marginRight="45dp"
+        android:background="@drawable/nextbtnstyle"
+        android:textStyle="bold"
+        android:textSize="20dp" />
+
+</LinearLayout>

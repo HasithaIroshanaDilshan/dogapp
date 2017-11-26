@@ -1,0 +1,23 @@
+<resources>
+    <string name="app_name">DogApp</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_main_page">MainPage</string>
+
+    <string name="title_user">User</string>
+    <string name="title_section1">Contribute</string>
+    <string name="title_section2">My Profile</string>
+    <string name="title_section3">Settings</string>
+    <string name="title_points">Points</string>
+    <string name="title_log_out">Log Out</string>
+    <string name="footer">Faculty of veterinary Medicine.\nUniversity of Peradeniya</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_example"></string>
+    <string name="gpsbtntxt">get from GPS</string>
+    <string name="title_activity_maps">Map</string>
+    <string name="title_activity_add_photo">AddPhotoActivity</string>
+</resources>

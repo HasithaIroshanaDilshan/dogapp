@@ -1,9 +1,12 @@
 package lk.ac.pdn.ce.dogapp;
 
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 
 
 public class AddPhoto extends ActionBarActivity {
@@ -12,6 +15,16 @@ public class AddPhoto extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_photo);
+
+        Button camerabtn=(Button)findViewById(R.id.camerabtn);
+        camerabtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent in = new Intent(getApplicationContext(), PhotoIntentActivity.class);
+                startActivity(in);
+            }
+        });
     }
 
     @Override

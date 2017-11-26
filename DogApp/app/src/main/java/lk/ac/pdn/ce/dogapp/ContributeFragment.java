@@ -13,10 +13,11 @@ import android.widget.Button;
 /**
  * Created by Hishan Indrajith on 11/23/2017.
  */
-public class ContributeFragment extends android.support.v4.app.Fragment implements View.OnClickListener{
+public class ContributeFragment extends android.support.v4.app.Fragment{
 
     View rootView;
     Button mapbtn;
+    Button nextbtn;
 
     public static ContributeFragment newInstance(){
         ContributeFragment fragment = new ContributeFragment();
@@ -28,7 +29,21 @@ public class ContributeFragment extends android.support.v4.app.Fragment implemen
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.fragment_contribute,container,false);
         mapbtn = (Button)rootView.findViewById(R.id.mapbtn);
-        mapbtn.setOnClickListener(this);
+        mapbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent in = new Intent(v.getContext().getApplicationContext(),MapsActivity.class);
+                startActivity(in);
+            }
+        });
+        nextbtn = (Button)rootView.findViewById(R.id.next1btn);
+        nextbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent in = new Intent(v.getContext().getApplicationContext(), AddPhoto.class);
+                startActivity(in);
+            }
+        });
         return rootView;
     }
 
@@ -41,10 +56,4 @@ public class ContributeFragment extends android.support.v4.app.Fragment implemen
     public ContributeFragment() {
     }
 
-
-    @Override
-    public void onClick(View v) {
-        Intent in = new Intent(v.getContext().getApplicationContext(),MapsActivity.class);
-        startActivity(in);
-    }
 }

@@ -44,7 +44,7 @@ public class ContributeFragment extends android.support.v4.app.Fragment implemen
 
     @Override
     public void onClick(View v) {
-        Intent in = new Intent(v.getContext().getApplicationContext(),Login.class);
+        Intent in = new Intent(v.getContext().getApplicationContext(),MapsActivity.class);
         startActivity(in);
     }
 }

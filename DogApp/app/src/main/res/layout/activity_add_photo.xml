@@ -5,58 +5,55 @@
     android:weightSum="1"
     android:background="#d4383838">
 
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="0.03"
-        android:weightSum="1"
-        android:layout_marginTop="10dp">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="Add Photo"
-            android:id="@+id/textView6"
-            android:textSize="35sp"
-            android:layout_marginLeft="20dp"
-            android:layout_gravity="center"
-            android:layout_weight="0.13"
-            android:textColor="@android:color/white" />
-
-    </LinearLayout>
-
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Select Method"
+        android:text="Add Dog Photo"
         android:id="@+id/textView7"
         android:layout_weight="0.03"
         android:layout_marginLeft="20dp"
         android:textSize="20dp"
-        android:textColor="@android:color/darker_gray" />
+        android:textColor="@android:color/darker_gray"
+        android:layout_marginTop="20dp" />
 
-    <Button
-        android:layout_width="300dp"
-        android:layout_height="wrap_content"
-        android:text="From Camera"
-        android:id="@+id/camerabtn"
-        android:layout_gravity="center_horizontal"
-        android:layout_weight="0.08"
-        android:background="@drawable/hover"
-        android:layout_marginTop="30dp" />
 
-    <Button
-        android:layout_width="300dp"
-        android:layout_height="wrap_content"
-        android:text="From Gallery"
-        android:id="@+id/gallerbtn"
-        android:layout_gravity="center_horizontal"
-        android:layout_weight="0.08"
-        android:background="@drawable/hover"
-        android:layout_marginTop="30dp" />
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="58dp"
+        android:weightSum="1"
+        android:layout_marginTop="10dp">
+
+        <Button
+            android:text="From Camera"
+            android:id="@+id/btnIntend"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_horizontal"
+            android:background="@drawable/hover"
+            android:layout_weight="0.4"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="10dp" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="From Gallery"
+            android:id="@+id/gallerbtn"
+            android:layout_gravity="center_horizontal"
+            android:layout_weight="0.4"
+            android:background="@drawable/hover"
+            android:layout_marginLeft="10dp" />
+    </LinearLayout>
+
+    <ImageView
+        android:layout_height="250dp"
+        android:layout_width="match_parent"
+        android:visibility="visible"
+        android:id="@+id/imageView1"
+        android:background="#ff0b074b"
+        android:layout_marginTop="20dp" />
 
     <Button
         android:layout_width="159dp"

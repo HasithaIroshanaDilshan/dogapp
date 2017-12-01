@@ -28,12 +28,9 @@
     <string name="cannot">Cannot</string>
     <string name="album_name">CameraSample</string>
     <string name="title_activity_dog_details">DogDetails</string>
-    <string-array name="dog_count_in_pic">
-        <item>1</item>
-        <item>2</item>
-        <item>3</item>
-        <item>4</item>
-        <item>5</item>
-        <item>6</item>
+    <string name="signuptxt">Sign Up</string>
+    <string-array name="size">
+        <item>Normal</item>
+        <item>Pet</item>
     </string-array>
 </resources>

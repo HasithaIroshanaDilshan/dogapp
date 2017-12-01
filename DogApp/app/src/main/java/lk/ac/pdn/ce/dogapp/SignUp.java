@@ -10,36 +10,17 @@ import android.widget.Button;
 import android.widget.TextView;
 
 
-public class Login extends ActionBarActivity {
+public class SignUp extends ActionBarActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
-
-        final TextView unametxt=(TextView)findViewById(R.id.usernametxt);
-
-        Button loginbtn=(Button)findViewById(R.id.loginbtn);
-        loginbtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                Intent in = new Intent(getApplicationContext(), MainPage.class);
-                in.putExtra("uname", unametxt.getText().toString());
-                startActivity(in);
-            }
-        });
-
-        TextView signup =(TextView)findViewById(R.id.signupbtn);
-        signup.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent in = new Intent(getApplicationContext(), SignUp.class);
-                in.putExtra("uname", unametxt.getText().toString());
-                startActivity(in);
-            }
-        });
-
+        setContentView(R.layout.activity_sign_up);
+        Button signup=(Button)findViewById(R.id.signup);
+        TextView uname=(TextView)findViewById(R.id.usernametxt);
+        TextView emailtxt=(TextView)findViewById(R.id.emailtxt);
+        TextView pword1txt=(TextView)findViewById(R.id.pword1txt);
+        TextView pword2txt=(TextView)findViewById(R.id.pword2txt);
     }
 
     @Override

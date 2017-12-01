@@ -93,11 +93,12 @@
             android:layout_height="match_parent"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:text="sign up"
-            android:id="@+id/textView2"
+            android:id="@+id/signupbtn"
             android:textColor="#ffaefff6"
             android:layout_marginLeft="30dp"
             android:textStyle="italic"
-            android:textSize="20sp" />
+            android:textSize="20sp"
+            android:clickable="true" />
 
     </LinearLayout>
 

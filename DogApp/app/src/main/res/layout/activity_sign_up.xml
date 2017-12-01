@@ -1,0 +1,165 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingTop="8dp"
+    android:orientation="vertical"
+    tools:context=".Login"
+    android:background="#ff050505"
+    android:weightSum="1">
+
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="20dp"
+        android:orientation="horizontal"
+        android:id="@+id/">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="User Name"
+            android:id="@+id/textView2"
+            android:textSize="20dp"
+            android:textColor="#ff90fff3"
+            android:layout_gravity="center"
+            android:layout_marginLeft="16dp" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
+            android:inputType="textPersonName"
+            android:ems="10"
+            android:id="@+id/usernametxt"
+            android:layout_gravity="center_horizontal"
+            android:background="@drawable/edittextstyle"
+            android:autoText="false"
+            android:textColor="#ffa9fff8"
+            android:paddingLeft="10dp"
+            android:layout_weight="0.48"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="1dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="email"
+            android:id="@+id/textView14"
+            android:textSize="20dp"
+            android:textColor="#ff90fff3"
+            android:layout_gravity="center"
+            android:layout_weight="0.57"
+            android:layout_marginLeft="16dp" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
+            android:ems="10"
+            android:id="@+id/emailtxt"
+            android:background="@drawable/edittextstyle"
+            android:autoText="false"
+            android:textColor="#ffa9fff8"
+            android:paddingLeft="10dp"
+            android:layout_marginLeft="16dp"
+            android:layout_weight="0.23"
+            android:layout_marginRight="16dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="1dp"
+            android:inputType="textEmailAddress" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="password"
+            android:id="@+id/textView15"
+            android:textSize="20dp"
+            android:textColor="#ff90fff3"
+            android:layout_gravity="center"
+            android:layout_weight="0.3"
+            android:layout_marginLeft="16dp" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
+            android:ems="10"
+            android:id="@+id/pword1txt"
+            android:layout_gravity="center_horizontal"
+            android:background="@drawable/edittextstyle"
+            android:autoText="false"
+            android:textColor="#ffa9fff8"
+            android:paddingLeft="10dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="1dp"
+            android:inputType="textPassword" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="password again"
+            android:id="@+id/textView16"
+            android:textSize="20dp"
+            android:textColor="#ff90fff3"
+            android:layout_weight="0.3"
+            android:layout_marginLeft="16dp" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
+            android:ems="10"
+            android:id="@+id/pword2txt"
+            android:background="@drawable/edittextstyle"
+            android:autoText="false"
+            android:textColor="#ffa9fff8"
+            android:paddingLeft="10dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginBottom="5dp"
+            android:layout_marginTop="1dp"
+            android:inputType="textPassword" />
+    </TableLayout>
+
+    <Button
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:text="Sign up"
+        android:id="@+id/signup"
+        android:layout_gravity="center_horizontal"
+        android:background="@drawable/hover"
+        android:textStyle="bold"
+        android:textSize="18sp"
+        android:layout_marginTop="26dp" />
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="1643dp"
+        android:layout_height="70dp"
+        android:background="#ff434343"
+        android:layout_gravity="bottom|center_horizontal"
+        android:layout_marginTop="50dp"
+        android:weightSum="1">
+
+        <TextView
+            android:layout_width="317dp"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="faculty of veterinary medicine - University of Peradeniya"
+            android:id="@+id/textView5"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="15dp"
+            android:textSize="13sp"
+            android:textStyle="italic"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_weight="0.33"
+            android:textColor="#ff9a9a97" />
+    </LinearLayout>
+
+</LinearLayout>

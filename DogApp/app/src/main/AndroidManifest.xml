@@ -68,6 +68,11 @@
             android:name=".DogDetails"
             android:label="@string/title_activity_dog_details" >
         </activity>
+        <activity
+            android:name=".SignUp"
+            android:label="@string/signuptxt" >
+        </activity>
+
     </application>
 
 </manifest>

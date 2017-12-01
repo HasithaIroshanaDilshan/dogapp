@@ -25,7 +25,7 @@ public class DogDetails extends ActionBarActivity {
         setContentView(R.layout.activity_dog_details);
 
         Spinner sp = (Spinner)findViewById(R.id.spinner);
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,R.array.dog_count_in_pic,R.layout.my_spinner_item);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,R.array.size,R.layout.my_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         sp.setAdapter(adapter);
 

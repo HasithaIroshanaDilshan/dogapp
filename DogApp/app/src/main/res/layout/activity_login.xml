@@ -103,7 +103,7 @@
 
     <LinearLayout
         android:orientation="vertical"
-        android:layout_width="375dp"
+        android:layout_width="1643dp"
         android:layout_height="70dp"
         android:background="#ff434343"
         android:layout_gravity="bottom|center_horizontal"

@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 
 /**
  * Created by Hishan Indrajith on 11/23/2017.
@@ -16,7 +17,7 @@ import android.widget.Button;
 public class ContributeFragment extends android.support.v4.app.Fragment{
 
     View rootView;
-    Button mapbtn;
+    ImageButton mapbtn;
     Button nextbtn;
 
     public static ContributeFragment newInstance(){
@@ -28,7 +29,7 @@ public class ContributeFragment extends android.support.v4.app.Fragment{
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.fragment_contribute,container,false);
-        mapbtn = (Button)rootView.findViewById(R.id.mapbtn);
+        mapbtn = (ImageButton)rootView.findViewById(R.id.mapbtn);
         mapbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

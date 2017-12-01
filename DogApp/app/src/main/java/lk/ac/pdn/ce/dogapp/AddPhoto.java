@@ -211,6 +211,16 @@ public class AddPhoto extends ActionBarActivity {
         } else {
             mAlbumStorageDirFactory = new BaseAlbumDirFactory();
         }
+
+        Button nextbtn = (Button) findViewById(R.id.next2btn);
+        nextbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent in = new Intent(v.getContext().getApplicationContext(), DogDetails.class);
+                //must send dog image
+                startActivity(in);
+            }
+        });
     }
 
     @Override

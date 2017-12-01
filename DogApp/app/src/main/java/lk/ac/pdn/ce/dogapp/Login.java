@@ -27,6 +27,7 @@ public class Login extends ActionBarActivity {
                 Intent in = new Intent(getApplicationContext(), MainPage.class);
                 in.putExtra("uname", unametxt.getText().toString());
                 startActivity(in);
+                System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
             }
         });
 

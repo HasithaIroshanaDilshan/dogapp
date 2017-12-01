@@ -27,7 +27,7 @@
 
         <Button
             android:text="From Camera"
-            android:id="@+id/btnIntend"
+            android:id="@+id/fromcamerabtn"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_gravity="center_horizontal"
@@ -40,7 +40,7 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:text="From Gallery"
-            android:id="@+id/gallerbtn"
+            android:id="@+id/fromgallerybtn"
             android:layout_gravity="center_horizontal"
             android:layout_weight="0.4"
             android:background="@drawable/hover"

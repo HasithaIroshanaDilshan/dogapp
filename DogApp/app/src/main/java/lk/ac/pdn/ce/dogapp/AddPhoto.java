@@ -1,7 +1,9 @@
 package lk.ac.pdn.ce.dogapp;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -20,15 +22,17 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
+import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.VideoView;
 
 
-public class AddPhoto extends ActionBarActivity {
+public class AddPhoto extends Activity {
 
     private static final int ACTION_TAKE_PHOTO_B = 1;
+    private final int SELECT_PHOTO = 2;
 
     private static final String BITMAP_STORAGE_KEY = "viewbitmap";
     private static final String IMAGEVIEW_VISIBILITY_STORAGE_KEY = "imageviewvisibility";
@@ -39,6 +43,7 @@ public class AddPhoto extends ActionBarActivity {
 
     private static final String JPEG_FILE_PREFIX = "IMG_";
     private static final String JPEG_FILE_SUFFIX = ".jpg";
+
 
     private AlbumStorageDirFactory mAlbumStorageDirFactory = null;
 
@@ -198,7 +203,7 @@ public class AddPhoto extends ActionBarActivity {
         mImageView = (ImageView) findViewById(R.id.imageView1);
         mImageBitmap = null;
 
-        Button picBtn = (Button) findViewById(R.id.btnIntend);
+        Button picBtn = (Button) findViewById(R.id.fromcamerabtn);
         setBtnListenerOrDisable(
                 picBtn,
                 mTakePicOnClickListener,
@@ -212,6 +217,15 @@ public class AddPhoto extends ActionBarActivity {
             mAlbumStorageDirFactory = new BaseAlbumDirFactory();
         }
 
+        Button gallerybtn = (Button) findViewById(R.id.fromgallerybtn);
+        gallerybtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
+                photoPickerIntent.setType("image/*");
+                startActivityForResult(photoPickerIntent, SELECT_PHOTO);
+            }
+        });
         Button nextbtn = (Button) findViewById(R.id.next2btn);
         nextbtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -221,6 +235,7 @@ public class AddPhoto extends ActionBarActivity {
                 startActivity(in);
             }
         });
+
     }
 
     @Override
@@ -231,7 +246,20 @@ public class AddPhoto extends ActionBarActivity {
                     handleBigCameraPhoto();
                 }
                 break;
-            } // ACTION_TAKE_PHOTO_B
+            }
+            case SELECT_PHOTO:
+                if(resultCode == RESULT_OK){
+                    try {
+                        final Uri imageUri = data.getData();
+                        final InputStream imageStream = getContentResolver().openInputStream(imageUri);
+                        final Bitmap selectedImage = BitmapFactory.decodeStream(imageStream);
+                        mImageView.setImageBitmap(selectedImage);
+                    } catch (FileNotFoundException e) {
+                        e.printStackTrace();
+                    }
+
+                }
+
         } // switch
     }
 
@@ -239,7 +267,7 @@ public class AddPhoto extends ActionBarActivity {
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         outState.putParcelable(BITMAP_STORAGE_KEY, mImageBitmap);
-        outState.putBoolean(IMAGEVIEW_VISIBILITY_STORAGE_KEY, (mImageBitmap != null) );
+        outState.putBoolean(IMAGEVIEW_VISIBILITY_STORAGE_KEY, (mImageBitmap != null));
         super.onSaveInstanceState(outState);
     }
 
@@ -289,5 +317,7 @@ public class AddPhoto extends ActionBarActivity {
             btn.setClickable(false);
         }
     }
+
+
 
 }

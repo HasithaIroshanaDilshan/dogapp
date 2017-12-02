@@ -1,6 +1,7 @@
 package lk.ac.pdn.ce.dogapp;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -38,6 +39,11 @@ public class SignUp extends ActionBarActivity {
                     String type= "sign_up";
                     BackgroundWorker backgroundWorker = new BackgroundWorker(thisContext);
                     backgroundWorker.execute(type,uname,email,pword1);
+                }else{
+                    AlertDialog alertDialog = new AlertDialog.Builder(thisContext).create();
+                    alertDialog.setTitle("Password");
+                    alertDialog.setMessage("Passwords doesn't match");
+                    alertDialog.show();
                 }
             }
         });

@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.BufferedReader;
@@ -27,7 +28,6 @@ public class BackgroundWorker extends AsyncTask<String,Void,String> {
     Activity context;
     String username;
     String type;
-    AlertDialog alertDialog;
 
     public BackgroundWorker(Activity context) {
         this.context = context;
@@ -99,6 +99,7 @@ public class BackgroundWorker extends AsyncTask<String,Void,String> {
 
     @Override
     protected void onPostExecute(String result) {
+        TextView pwordtxt=(TextView)context.findViewById(R.id.pwordtxt);
         if(type.equals("login")){
             if(result==null){
                 result="Problem in the Server";
@@ -109,15 +110,17 @@ public class BackgroundWorker extends AsyncTask<String,Void,String> {
                 context.startActivity(in);
                 context.finish();
             }else if(result.equals("login not success")){
-                alertDialog = new AlertDialog.Builder(context).create();
+                AlertDialog alertDialog = new AlertDialog.Builder(context).create();
                 alertDialog.setTitle("Login Status");
                 alertDialog.setMessage(result);
                 alertDialog.show();
+                pwordtxt.setText("");
             }else if(result.equals("network problem")){
-                alertDialog = new AlertDialog.Builder(context).create();
+                AlertDialog alertDialog = new AlertDialog.Builder(context).create();
                 alertDialog.setTitle("Login Status");
                 alertDialog.setMessage("Check your network connection");
                 alertDialog.show();
+                pwordtxt.setText("");
             }
         }else if(type.equals("sign_up")){
             if(result==null){
@@ -127,15 +130,16 @@ public class BackgroundWorker extends AsyncTask<String,Void,String> {
                 Intent in = new Intent(context.getApplicationContext(), Login.class);
                 context.startActivity(in);
             }else if(result.equals("signup not successful")){
-                alertDialog = new AlertDialog.Builder(context).create();
+                AlertDialog alertDialog = new AlertDialog.Builder(context).create();
                 alertDialog.setTitle("Login Status");
                 alertDialog.setMessage(result);
                 alertDialog.show();
             }else if(result.equals("network problem")){
-                alertDialog = new AlertDialog.Builder(context).create();
+                AlertDialog alertDialog = new AlertDialog.Builder(context).create();
                 alertDialog.setTitle("Login Status");
                 alertDialog.setMessage("Check your network connection");
                 alertDialog.show();
+
             }
         }
 

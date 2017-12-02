@@ -24,25 +24,39 @@ import java.net.URLEncoder;
  */
 public class BackgroundWorker extends AsyncTask<String,Void,String> {
 
-    Context context;
+    Activity context;
     String username;
+    String type;
     AlertDialog alertDialog;
 
-    public BackgroundWorker(Context context) {
+    public BackgroundWorker(Activity context) {
         this.context = context;
     }
 
     @Override
     protected String doInBackground(String... params) {
-        String type = params[0];
-        username = params[1];
-        String password = params[2];
+        type = params[0];
         String login_url ="http://192.168.43.12/dogapp/login.php";
         String sign_up_url ="http://192.168.43.12/dogapp/signup.php";
         if(type.equals("login")){
+            username = params[1];
+            String password = params[2];
             try {
                 String post_data = URLEncoder.encode("username","UTF-8")+"="+URLEncoder.encode(username,"UTF-8")+"&"+URLEncoder.encode("password","UTF-8")+"="+URLEncoder.encode(password,"UTF-8");
                 return ioFunction(login_url,post_data);
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+                return "network problem";
+            }
+        }else if(type.equals("sign_up")){
+            String signup_username=params[1];
+            String signup_email=params[2];
+            String signup_password=params[3];
+            try {
+                String post_data = URLEncoder.encode("username","UTF-8")+"="+URLEncoder.encode(signup_username,"UTF-8")+"&"+URLEncoder.encode("email","UTF-8")+"="+URLEncoder.encode(signup_email,"UTF-8")+"&"+URLEncoder.encode("password","UTF-8")+"="+URLEncoder.encode(signup_password,"UTF-8");
+                return ioFunction(sign_up_url,post_data);
             } catch (MalformedURLException e) {
                 e.printStackTrace();
             } catch (IOException e) {
@@ -53,7 +67,7 @@ public class BackgroundWorker extends AsyncTask<String,Void,String> {
         return null;
     }
 
-    private String ioFunction(String stringUrl,String post_data)throws MalformedURLException,IOException{
+    private static String ioFunction(String stringUrl,String post_data)throws MalformedURLException,IOException{
         URL url = new URL(stringUrl);
         HttpURLConnection httpURLConnection = (HttpURLConnection)url.openConnection();
         httpURLConnection.setRequestMethod("POST");
@@ -85,23 +99,44 @@ public class BackgroundWorker extends AsyncTask<String,Void,String> {
 
     @Override
     protected void onPostExecute(String result) {
-        if(result==null){
-            result="Problem in the Server";
-        }else if(result.equals("login success")){
-            Toast.makeText(context,result,Toast.LENGTH_LONG).show();
-            Intent in = new Intent(context.getApplicationContext(), MainPage.class);
-            in.putExtra("uname",username);
-            context.startActivity(in);
-        }else if(result.equals("login not success")){
-            alertDialog = new AlertDialog.Builder(context).create();
-            alertDialog.setTitle("Login Status");
-            alertDialog.setMessage(result);
-            alertDialog.show();
-        }else if(result.equals("network problem")){
-            alertDialog = new AlertDialog.Builder(context).create();
-            alertDialog.setTitle("Login Status");
-            alertDialog.setMessage("Check your network connection");
-            alertDialog.show();
+        if(type.equals("login")){
+            if(result==null){
+                result="Problem in the Server";
+            }else if(result.equals("login success")){
+                Toast.makeText(context,result,Toast.LENGTH_LONG).show();
+                Intent in = new Intent(context.getApplicationContext(), MainPage.class);
+                in.putExtra("uname", username);
+                context.startActivity(in);
+                context.finish();
+            }else if(result.equals("login not success")){
+                alertDialog = new AlertDialog.Builder(context).create();
+                alertDialog.setTitle("Login Status");
+                alertDialog.setMessage(result);
+                alertDialog.show();
+            }else if(result.equals("network problem")){
+                alertDialog = new AlertDialog.Builder(context).create();
+                alertDialog.setTitle("Login Status");
+                alertDialog.setMessage("Check your network connection");
+                alertDialog.show();
+            }
+        }else if(type.equals("sign_up")){
+            if(result==null){
+                result="Problem in the Server";
+            }else if(result.equals("signup successful")){
+                Toast.makeText(context,result,Toast.LENGTH_LONG).show();
+                Intent in = new Intent(context.getApplicationContext(), Login.class);
+                context.startActivity(in);
+            }else if(result.equals("signup not successful")){
+                alertDialog = new AlertDialog.Builder(context).create();
+                alertDialog.setTitle("Login Status");
+                alertDialog.setMessage(result);
+                alertDialog.show();
+            }else if(result.equals("network problem")){
+                alertDialog = new AlertDialog.Builder(context).create();
+                alertDialog.setTitle("Login Status");
+                alertDialog.setMessage("Check your network connection");
+                alertDialog.show();
+            }
         }
 
     }

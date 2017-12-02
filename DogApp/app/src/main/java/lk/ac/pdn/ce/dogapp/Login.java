@@ -1,5 +1,6 @@
 package lk.ac.pdn.ce.dogapp;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -18,7 +19,7 @@ public class Login extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        final Context thisContext = this;
+        final Activity thisContext = this;
         Button loginbtn=(Button)findViewById(R.id.loginbtn);
         loginbtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -29,7 +30,7 @@ public class Login extends ActionBarActivity {
                 String pword =pwordtxt.getText().toString();
                 String type= "login";
                 BackgroundWorker backgroundWorker = new BackgroundWorker(thisContext);
-                backgroundWorker.execute(type,uname,pword);
+                backgroundWorker.execute(type, uname, pword);
             }
         });
 

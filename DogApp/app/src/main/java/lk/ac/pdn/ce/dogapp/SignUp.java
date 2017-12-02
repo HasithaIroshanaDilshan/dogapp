@@ -1,5 +1,7 @@
 package lk.ac.pdn.ce.dogapp;
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
@@ -12,15 +14,33 @@ import android.widget.TextView;
 
 public class SignUp extends ActionBarActivity {
 
+    Activity thisContext;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
+
+        thisContext=this;
         Button signup=(Button)findViewById(R.id.signup);
-        TextView uname=(TextView)findViewById(R.id.usernametxt);
-        TextView emailtxt=(TextView)findViewById(R.id.emailtxt);
-        TextView pword1txt=(TextView)findViewById(R.id.pword1txt);
-        TextView pword2txt=(TextView)findViewById(R.id.pword2txt);
+        signup.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                TextView unametxt=(TextView)findViewById(R.id.usernametxt);
+                TextView emailtxt=(TextView)findViewById(R.id.emailtxt);
+                TextView pword1txt=(TextView)findViewById(R.id.pword1txt);
+                TextView pword2txt=(TextView)findViewById(R.id.pword2txt);
+                String uname =unametxt.getText().toString();
+                String email =emailtxt.getText().toString();
+                String pword1 =pword1txt.getText().toString();
+                String pword2 =pword2txt.getText().toString();
+                if(pword1.equals(pword2)){
+                    String type= "sign_up";
+                    BackgroundWorker backgroundWorker = new BackgroundWorker(thisContext);
+                    backgroundWorker.execute(type,uname,email,pword1);
+                }
+            }
+        });
     }
 
     @Override

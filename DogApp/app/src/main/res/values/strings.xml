@@ -33,4 +33,5 @@
         <item>Normal</item>
         <item>Pet</item>
     </string-array>
+    <string name="title_activity_splash">Splash</string>
 </resources>

@@ -2,6 +2,7 @@ package lk.ac.pdn.ce.dogapp;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -13,6 +14,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 
 public class MainPage extends ActionBarActivity
@@ -27,7 +29,7 @@ public class MainPage extends ActionBarActivity
      * Used to store the last screen title. For use in {@link #restoreActionBar()}.
      */
     private CharSequence mTitle;
-    static String uname;
+    static String[] userData;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,7 +45,10 @@ public class MainPage extends ActionBarActivity
                 R.id.navigation_drawer,
                 (DrawerLayout) findViewById(R.id.drawer_layout));
         Intent loginIntent = getIntent();
-        uname= loginIntent.getExtras().getString("uname");
+        userData= loginIntent.getExtras().getStringArray("userData");
+
+
+
 
     }
 
@@ -71,9 +76,12 @@ public class MainPage extends ActionBarActivity
                     .replace(R.id.container, SettingsFragment.newInstance())
                     .commit();
         }else if(position==6){
-            fragmentManager.beginTransaction()
-                    .replace(R.id.container, MyProfileFragment.newInstance())
-                    .commit();
+            SharedPreferences sharedPreferences = getSharedPreferences("login",MODE_PRIVATE);
+            sharedPreferences.edit().putString("uname","").apply();
+            sharedPreferences.edit().putString("id","").apply();
+            Intent in = new Intent(getApplicationContext(), Login.class);
+            startActivity(in);
+            finish();
         }
 
     }

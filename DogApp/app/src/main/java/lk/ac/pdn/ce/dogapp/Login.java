@@ -26,11 +26,12 @@ public class Login extends ActionBarActivity {
             public void onClick(View v) {
                 TextView unametxt=(TextView)findViewById(R.id.usernametxt);
                 TextView pwordtxt=(TextView)findViewById(R.id.pwordtxt);
-                String uname =unametxt.getText().toString();
-                String pword =pwordtxt.getText().toString();
+                String uname =unametxt.getText().toString().trim();
+                String pword =pwordtxt.getText().toString().trim();
                 String type= "login";
                 BackgroundWorker backgroundWorker = new BackgroundWorker(thisContext);
                 backgroundWorker.execute(type, uname, pword);
+
             }
         });
 

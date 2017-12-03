@@ -31,20 +31,37 @@ public class SignUp extends ActionBarActivity {
                 TextView emailtxt=(TextView)findViewById(R.id.emailtxt);
                 TextView pword1txt=(TextView)findViewById(R.id.pword1txt);
                 TextView pword2txt=(TextView)findViewById(R.id.pword2txt);
-                String uname =unametxt.getText().toString();
-                String email =emailtxt.getText().toString();
-                String pword1 =pword1txt.getText().toString();
-                String pword2 =pword2txt.getText().toString();
-                if(pword1.equals(pword2)){
-                    String type= "sign_up";
-                    BackgroundWorker backgroundWorker = new BackgroundWorker(thisContext);
-                    backgroundWorker.execute(type,uname,email,pword1);
-                }else{
+                String uname =unametxt.getText().toString().trim();
+                String email =emailtxt.getText().toString().trim();
+                String pword1 =pword1txt.getText().toString().trim();
+                String pword2 =pword2txt.getText().toString().trim();
+                if(uname.equals("")){
+                    AlertDialog alertDialog = new AlertDialog.Builder(thisContext).create();
+                    alertDialog.setTitle("User Name");
+                    alertDialog.setMessage("Must add a valid User Name");
+                    alertDialog.show();
+                }else if(email.equals("")){
+                    AlertDialog alertDialog = new AlertDialog.Builder(thisContext).create();
+                    alertDialog.setTitle("Email");
+                    alertDialog.setMessage("Must add a valid Email");
+                    alertDialog.show();
+                }else if(pword1.equals("")){
+                    AlertDialog alertDialog = new AlertDialog.Builder(thisContext).create();
+                    alertDialog.setTitle("Password");
+                    alertDialog.setMessage("Password cannot be empty");
+                    alertDialog.show();
+                }else if(!pword1.equals(pword2)){
                     AlertDialog alertDialog = new AlertDialog.Builder(thisContext).create();
                     alertDialog.setTitle("Password");
                     alertDialog.setMessage("Passwords doesn't match");
                     alertDialog.show();
+                }else{
+                    String type= "sign_up";
+                    BackgroundWorker backgroundWorker = new BackgroundWorker(thisContext);
+                    backgroundWorker.execute(type,uname,email,pword1);
                 }
+
+
             }
         });
     }

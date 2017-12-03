@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -103,16 +104,20 @@ public class BackgroundWorker extends AsyncTask<String,Void,String> {
         if(type.equals("login")){
             if(result==null){
                 result="Problem in the Server";
-            }else if(result.equals("login success")){
-                Toast.makeText(context,result,Toast.LENGTH_LONG).show();
+            }else if(result.split(",")[0].equals("login success")){
+                Toast.makeText(context,"login success...",Toast.LENGTH_LONG).show();
                 Intent in = new Intent(context.getApplicationContext(), MainPage.class);
-                in.putExtra("uname", username);
+                String userData[]={username,result.split(",")[1]};
+                in.putExtra("userData", userData);
+                SharedPreferences sharedPreferences = context.getSharedPreferences("login",context.MODE_PRIVATE);
+                sharedPreferences.edit().putString("uname",username).apply();
+                sharedPreferences.edit().putString("id",userData[1]).apply();
                 context.startActivity(in);
                 context.finish();
             }else if(result.equals("login not success")){
                 AlertDialog alertDialog = new AlertDialog.Builder(context).create();
                 alertDialog.setTitle("Login Status");
-                alertDialog.setMessage(result);
+                alertDialog.setMessage("Access Denied!!");
                 alertDialog.show();
                 pwordtxt.setText("");
             }else if(result.equals("network problem")){
@@ -129,14 +134,19 @@ public class BackgroundWorker extends AsyncTask<String,Void,String> {
                 Toast.makeText(context,result,Toast.LENGTH_LONG).show();
                 Intent in = new Intent(context.getApplicationContext(), Login.class);
                 context.startActivity(in);
+            }else if(result.equals("user_already")){
+                AlertDialog alertDialog = new AlertDialog.Builder(context).create();
+                alertDialog.setTitle("SignUp Status");
+                alertDialog.setMessage("Cannot use password. Please use another one.");
+                alertDialog.show();
             }else if(result.equals("signup not successful")){
                 AlertDialog alertDialog = new AlertDialog.Builder(context).create();
-                alertDialog.setTitle("Login Status");
+                alertDialog.setTitle("SignUp Status");
                 alertDialog.setMessage(result);
                 alertDialog.show();
             }else if(result.equals("network problem")){
                 AlertDialog alertDialog = new AlertDialog.Builder(context).create();
-                alertDialog.setTitle("Login Status");
+                alertDialog.setTitle("SignUp Status");
                 alertDialog.setMessage("Check your network connection");
                 alertDialog.show();
 

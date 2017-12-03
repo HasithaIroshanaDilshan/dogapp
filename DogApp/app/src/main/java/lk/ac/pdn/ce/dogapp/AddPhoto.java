@@ -10,9 +10,11 @@ import java.util.List;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.CursorLoader;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
@@ -25,6 +27,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.VideoView;
 
@@ -163,27 +166,19 @@ public class AddPhoto extends Activity {
         startActivityForResult(takePictureIntent, actionCode);
     }
 
-    private void handleSmallCameraPhoto(Intent intent) {
-        Bundle extras = intent.getExtras();
-        mImageBitmap = (Bitmap) extras.get("data");
-        mImageView.setImageBitmap(mImageBitmap);
-        mImageView.setVisibility(View.VISIBLE);
-    }
 
     private void handleBigCameraPhoto() {
 
         if (mCurrentPhotoPath != null) {
             setPic();
             galleryAddPic();
+            ContributeFragment.dog.setMainLocalPhotoAddress(mCurrentPhotoPath);
             mCurrentPhotoPath = null;
         }
 
     }
 
-    private void handleCameraVideo(Intent intent) {
-        mImageBitmap = null;
-        mImageView.setVisibility(View.INVISIBLE);
-    }
+
 
     Button.OnClickListener mTakePicOnClickListener =
             new Button.OnClickListener() {
@@ -203,7 +198,7 @@ public class AddPhoto extends Activity {
         mImageView = (ImageView) findViewById(R.id.imageView1);
         mImageBitmap = null;
 
-        Button picBtn = (Button) findViewById(R.id.fromcamerabtn);
+        ImageButton picBtn = (ImageButton) findViewById(R.id.fromcamerabtn);
         setBtnListenerOrDisable(
                 picBtn,
                 mTakePicOnClickListener,
@@ -217,7 +212,7 @@ public class AddPhoto extends Activity {
             mAlbumStorageDirFactory = new BaseAlbumDirFactory();
         }
 
-        Button gallerybtn = (Button) findViewById(R.id.fromgallerybtn);
+        ImageButton gallerybtn = (ImageButton) findViewById(R.id.fromgallerybtn);
         gallerybtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -230,8 +225,9 @@ public class AddPhoto extends Activity {
         nextbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                String dateTime = new SimpleDateFormat("yyyy:MM:dd-HH:mm:ss").format(new Date());
+                ContributeFragment.dog.setDateTime(dateTime);
                 Intent in = new Intent(v.getContext().getApplicationContext(), DogDetails.class);
-                //must send dog image
                 startActivity(in);
             }
         });
@@ -251,6 +247,7 @@ public class AddPhoto extends Activity {
                 if(resultCode == RESULT_OK){
                     try {
                         final Uri imageUri = data.getData();
+                        ContributeFragment.dog.setMainLocalPhotoAddress(imageUri.toString());
                         final InputStream imageStream = getContentResolver().openInputStream(imageUri);
                         final Bitmap selectedImage = BitmapFactory.decodeStream(imageStream);
                         mImageView.setImageBitmap(selectedImage);
@@ -263,61 +260,69 @@ public class AddPhoto extends Activity {
         } // switch
     }
 
-    // Some lifecycle callbacks so that the image can survive orientation change
-    @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        outState.putParcelable(BITMAP_STORAGE_KEY, mImageBitmap);
-        outState.putBoolean(IMAGEVIEW_VISIBILITY_STORAGE_KEY, (mImageBitmap != null));
-        super.onSaveInstanceState(outState);
-    }
-
-    @Override
-    protected void onRestoreInstanceState(Bundle savedInstanceState) {
-        super.onRestoreInstanceState(savedInstanceState);
-        mImageBitmap = savedInstanceState.getParcelable(BITMAP_STORAGE_KEY);
-        mImageView.setImageBitmap(mImageBitmap);
-        mImageView.setVisibility(
-                savedInstanceState.getBoolean(IMAGEVIEW_VISIBILITY_STORAGE_KEY) ?
-                        ImageView.VISIBLE : ImageView.INVISIBLE
-        );
-    }
-
-    /**
-     * Indicates whether the specified action can be used as an intent. This
-     * method queries the package manager for installed packages that can
-     * respond to an intent with the specified action. If no suitable package is
-     * found, this method returns false.
-     * http://android-developers.blogspot.com/2009/01/can-i-use-this-intent.html
-     *
-     * @param context The application's environment.
-     * @param action The Intent action to check for availability.
-     *
-     * @return True if an Intent with the specified action can be sent and
-     *         responded to, false otherwise.
-     */
-    public static boolean isIntentAvailable(Context context, String action) {
-        final PackageManager packageManager = context.getPackageManager();
-        final Intent intent = new Intent(action);
-        List<ResolveInfo> list =
-                packageManager.queryIntentActivities(intent,
-                        PackageManager.MATCH_DEFAULT_ONLY);
-        return list.size() > 0;
-    }
-
-    private void setBtnListenerOrDisable(
-            Button btn,
-            Button.OnClickListener onClickListener,
-            String intentName
-    ) {
-        if (isIntentAvailable(this, intentName)) {
-            btn.setOnClickListener(onClickListener);
-        } else {
-            btn.setText(
-                    getText(R.string.cannot).toString() + " " + btn.getText());
-            btn.setClickable(false);
+        // Some lifecycle callbacks so that the image can survive orientation change
+        @Override
+        protected void onSaveInstanceState(Bundle outState) {
+            outState.putParcelable(BITMAP_STORAGE_KEY, mImageBitmap);
+            outState.putBoolean(IMAGEVIEW_VISIBILITY_STORAGE_KEY, (mImageBitmap != null));
+            super.onSaveInstanceState(outState);
         }
+
+        @Override
+        protected void onRestoreInstanceState(Bundle savedInstanceState) {
+            super.onRestoreInstanceState(savedInstanceState);
+            mImageBitmap = savedInstanceState.getParcelable(BITMAP_STORAGE_KEY);
+            mImageView.setImageBitmap(mImageBitmap);
+            mImageView.setVisibility(
+                    savedInstanceState.getBoolean(IMAGEVIEW_VISIBILITY_STORAGE_KEY) ?
+                            ImageView.VISIBLE : ImageView.INVISIBLE
+            );
+        }
+
+        /**
+         * Indicates whether the specified action can be used as an intent. This
+         * method queries the package manager for installed packages that can
+         * respond to an intent with the specified action. If no suitable package is
+         * found, this method returns false.
+         * http://android-developers.blogspot.com/2009/01/can-i-use-this-intent.html
+         *
+         * @param context The application's environment.
+         * @param action The Intent action to check for availability.
+         *
+         * @return True if an Intent with the specified action can be sent and
+         *         responded to, false otherwise.
+         */
+        public static boolean isIntentAvailable(Context context, String action) {
+            final PackageManager packageManager = context.getPackageManager();
+            final Intent intent = new Intent(action);
+            List<ResolveInfo> list =
+                    packageManager.queryIntentActivities(intent,
+                            PackageManager.MATCH_DEFAULT_ONLY);
+            return list.size() > 0;
+        }
+
+        private void setBtnListenerOrDisable(
+                ImageButton btn,
+                Button.OnClickListener onClickListener,
+                String intentName
+        ) {
+            if (isIntentAvailable(this, intentName)) {
+                btn.setOnClickListener(onClickListener);
+            } else {
+
+                btn.setClickable(false);
+            }
+        }
+
+        private String getRealPathFromURI(Uri contentUri) {
+            String[] proj = { MediaStore.Images.Media.DATA };
+            CursorLoader loader = new CursorLoader(this, contentUri, proj, null, null, null);
+            Cursor cursor =loader.loadInBackground();
+            int column_index= cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+            cursor.moveToFirst();
+            String result = cursor.getString(column_index);
+            cursor.close();
+            return result;
+        }
+
     }
-
-
-
-}

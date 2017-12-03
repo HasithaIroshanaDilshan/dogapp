@@ -58,12 +58,12 @@ public class MainPage extends ActionBarActivity
         FragmentManager fragmentManager = getSupportFragmentManager();
         if(position==0){
             fragmentManager.beginTransaction()
-                    .replace(R.id.container, ContributeFragment.newInstance())
+                    .replace(R.id.container, ContributeFragment.newInstance(MainPage.this))
                     .commit();
         }
         if(position==1){
             fragmentManager.beginTransaction()
-                    .replace(R.id.container, ContributeFragment.newInstance())
+                    .replace(R.id.container, ContributeFragment.newInstance(MainPage.this))
                     .commit();
         }
         else if(position==2){

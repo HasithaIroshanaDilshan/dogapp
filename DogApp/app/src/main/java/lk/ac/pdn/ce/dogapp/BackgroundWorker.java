@@ -39,6 +39,7 @@ public class BackgroundWorker extends AsyncTask<String,Void,String> {
         type = params[0];
         String login_url ="http://192.168.43.12/dogapp/login.php";
         String sign_up_url ="http://192.168.43.12/dogapp/signup.php";
+        String newDog_url ="http://192.168.43.12/dogapp/newdog.php";
         if(type.equals("login")){
             username = params[1];
             String password = params[2];
@@ -58,6 +59,29 @@ public class BackgroundWorker extends AsyncTask<String,Void,String> {
             try {
                 String post_data = URLEncoder.encode("username","UTF-8")+"="+URLEncoder.encode(signup_username,"UTF-8")+"&"+URLEncoder.encode("email","UTF-8")+"="+URLEncoder.encode(signup_email,"UTF-8")+"&"+URLEncoder.encode("password","UTF-8")+"="+URLEncoder.encode(signup_password,"UTF-8");
                 return ioFunction(sign_up_url,post_data);
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+                return "network problem";
+            }
+        }else if(type.equals("new_dog")){
+            String latitude=params[1];
+            String longitude=params[2];
+            String photoPath=params[3];
+            String colorCode=params[4];
+            String size=params[5];
+            String type=params[6];
+            String date=params[7];
+            try {
+                String post_data = URLEncoder.encode("latitude","UTF-8")+"="+URLEncoder.encode(latitude,"UTF-8")+
+                        "&"+URLEncoder.encode("longitude","UTF-8")+"="+URLEncoder.encode(longitude,"UTF-8")+
+                        "&"+URLEncoder.encode("photoPath","UTF-8")+"="+URLEncoder.encode(photoPath,"UTF-8")+
+                        "&"+URLEncoder.encode("colorCode","UTF-8")+"="+URLEncoder.encode(colorCode,"UTF-8")+
+                        "&"+URLEncoder.encode("size","UTF-8")+"="+URLEncoder.encode(size,"UTF-8")+
+                        "&"+URLEncoder.encode("type","UTF-8")+"="+URLEncoder.encode(type,"UTF-8")+
+                        "&"+URLEncoder.encode("date","UTF-8")+"="+URLEncoder.encode(date,"UTF-8");
+                return ioFunction(newDog_url,post_data);
             } catch (MalformedURLException e) {
                 e.printStackTrace();
             } catch (IOException e) {
@@ -150,6 +174,25 @@ public class BackgroundWorker extends AsyncTask<String,Void,String> {
                 alertDialog.setMessage("Check your network connection");
                 alertDialog.show();
 
+            }
+        }else if(type.equals("new_dog")){
+            if(result==null){
+                result="Problem in the Server";
+            }else if(result.equals("dog add successful")){
+                AlertDialog alertDialog = new AlertDialog.Builder(context).create();
+                alertDialog.setTitle("SignUp Status");
+                alertDialog.setMessage("dog add successful");
+                alertDialog.show();
+            }else if(result.equals("dog add not successful")){
+                AlertDialog alertDialog = new AlertDialog.Builder(context).create();
+                alertDialog.setTitle("SignUp Status");
+                alertDialog.setMessage("dog add not successful");
+                alertDialog.show();
+            }else if(result.equals("network problem")){
+                AlertDialog alertDialog = new AlertDialog.Builder(context).create();
+                alertDialog.setTitle("SignUp Status");
+                alertDialog.setMessage("Check your network connection");
+                alertDialog.show();
             }
         }
 

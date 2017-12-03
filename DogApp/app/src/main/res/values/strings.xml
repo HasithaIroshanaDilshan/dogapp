@@ -30,7 +30,11 @@
     <string name="title_activity_dog_details">DogDetails</string>
     <string name="signuptxt">Sign Up</string>
     <string-array name="size">
-        <item>Normal</item>
+        <item>Grown</item>
+        <item>Puppy</item>
+    </string-array>
+    <string-array name="stray">
+        <item>Stray</item>
         <item>Pet</item>
     </string-array>
     <string name="title_activity_splash">Splash</string>

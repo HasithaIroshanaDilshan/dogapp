@@ -1,17 +1,54 @@
 package lk.ac.pdn.ce.dogapp;
 
+import android.content.Context;
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.Toast;
 
 
 public class Suggesions extends ActionBarActivity {
+    int no_of_suggesions;
+    String suggesions[];
+    static int currentId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_suggesions);
+
+        currentId=0;
+        Intent loginIntent = getIntent();
+        String [] suggesionsAr= loginIntent.getExtras().getStringArray("suggesions");
+        no_of_suggesions=Integer.parseInt(suggesionsAr[0]);
+        suggesions=suggesionsAr[1].split(",");
+        final String type ="getImage";
+        final BackgroundWorker backgroundWorker = new BackgroundWorker(this);
+        backgroundWorker.execute(type, "" + suggesions[currentId]);
+
+        Button nobtn=(Button)findViewById(R.id.nobtn);
+        nobtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Suggesions.currentId++;
+                if(currentId<no_of_suggesions){
+                    BackgroundWorker newbackgroundWorker = new BackgroundWorker(Suggesions.this);
+                    newbackgroundWorker.execute(type, "" + suggesions[currentId]);
+                }else{
+                    String msg="SUCCESSFUL!!.Dog saved as a new Dog";
+                    Toast.makeText(Suggesions.this, msg, Toast.LENGTH_LONG).show();
+                    startActivity(MainPage.getMainIntent());
+                    Suggesions.this.finish();
+                }
+
+            }
+        });
+
     }
 
     @Override
@@ -35,4 +72,5 @@ public class Suggesions extends ActionBarActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
 }

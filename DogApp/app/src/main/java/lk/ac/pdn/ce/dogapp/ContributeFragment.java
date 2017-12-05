@@ -36,7 +36,7 @@ public class ContributeFragment extends android.support.v4.app.Fragment{
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, final ViewGroup container, Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.fragment_contribute,container,false);
         mapbtn = (ImageButton)rootView.findViewById(R.id.mapbtn);
         mapbtn.setOnClickListener(new View.OnClickListener() {
@@ -77,6 +77,7 @@ public class ContributeFragment extends android.support.v4.app.Fragment{
             public void onClick(View v) {
                 Intent in = new Intent(v.getContext().getApplicationContext(), AddPhoto.class);
                 startActivity(in);
+                MainPage.getActivity().finish();
             }
         });
         return rootView;

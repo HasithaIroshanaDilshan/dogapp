@@ -60,13 +60,12 @@ public class DogDetails extends ActionBarActivity {
                 ContributeFragment.dog.setColorCode((radioColor[0].isChecked()?"W":"")+(radioColor[1].isChecked()?"R":"")+(radioColor[2].isChecked()?"G":"")+(radioColor[3].isChecked()?"B":""));
                 ContributeFragment.dog.setSize(spSize.getSelectedItem().toString());
                 ContributeFragment.dog.setType(spStray.getSelectedItem().toString());
-                String type= "new_dog";
+                String type= "suggestion";
                 BackgroundWorker backgroundWorker = new BackgroundWorker(DogDetails.this);
                 backgroundWorker.execute(type,""+ContributeFragment.dog.getLocationLatitude(),""+ ContributeFragment.dog.getLocationLongitude(), ContributeFragment.dog.getMainLocalPhoto(), ContributeFragment.dog.getColorCode(),ContributeFragment.dog.getSize(),ContributeFragment.dog.getType(),ContributeFragment.dog.getDateTime());
+
             }
         });
-
-
 
     }
 

@@ -30,12 +30,22 @@ public class MainPage extends ActionBarActivity
      */
     private CharSequence mTitle;
     static String[] userData;
+    private static Intent  loginIntent;
+    private static Activity activity;
+
+    public static Intent getMainIntent(){
+        return loginIntent;
+    }
+    public static Activity getActivity(){
+        return activity;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_page);
 
+        activity=this;
         mNavigationDrawerFragment = (NavigationDrawerFragment)
                 getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
         mTitle = getTitle();
@@ -44,11 +54,8 @@ public class MainPage extends ActionBarActivity
         mNavigationDrawerFragment.setUp(
                 R.id.navigation_drawer,
                 (DrawerLayout) findViewById(R.id.drawer_layout));
-        Intent loginIntent = getIntent();
+        loginIntent= getIntent();
         userData= loginIntent.getExtras().getStringArray("userData");
-
-
-
 
     }
 

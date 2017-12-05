@@ -5,7 +5,12 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
+import android.util.Base64;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -37,9 +42,11 @@ public class BackgroundWorker extends AsyncTask<String,Void,String> {
     @Override
     protected String doInBackground(String... params) {
         type = params[0];
-        String login_url ="http://hishan.000webhostapp.com/dogapp/login.php";
-        String sign_up_url ="http://hishan.000webhostapp.com/dogapp/signup.php";
-        String newDog_url ="http://hishan.000webhostapp.com/dogapp/newdog.php";
+        String login_url ="http://192.168.43.12/dogapp/login.php";
+        String sign_up_url ="http://192.168.43.12/dogapp/signup.php";
+        String suggesion_url ="http://192.168.43.12/dogapp/getsuggesion.php";
+        String getImage_url ="http://192.168.43.12/dogapp/getimage.php";
+
         if(type.equals("login")){
             username = params[1];
             String password = params[2];
@@ -65,7 +72,7 @@ public class BackgroundWorker extends AsyncTask<String,Void,String> {
                 e.printStackTrace();
                 return "network problem";
             }
-        }else if(type.equals("new_dog")){
+        }else if(type.equals("suggestion")){
             String latitude=params[1];
             String longitude=params[2];
             String photo=params[3];
@@ -81,7 +88,18 @@ public class BackgroundWorker extends AsyncTask<String,Void,String> {
                         "&"+URLEncoder.encode("size","UTF-8")+"="+URLEncoder.encode(size,"UTF-8")+
                         "&"+URLEncoder.encode("type","UTF-8")+"="+URLEncoder.encode(type,"UTF-8")+
                         "&"+URLEncoder.encode("date","UTF-8")+"="+URLEncoder.encode(date,"UTF-8");
-                return ioFunction(newDog_url,post_data);
+                return ioFunction(suggesion_url,post_data);
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+                return "network problem";
+            }
+        }else if(type.equals("getImage")){
+            String image_id = params[1];
+            try{
+                String post_data = URLEncoder.encode("image_id","UTF-8")+"="+URLEncoder.encode(image_id,"UTF-8");
+                return ioFunction(getImage_url,post_data);
             } catch (MalformedURLException e) {
                 e.printStackTrace();
             } catch (IOException e) {
@@ -158,6 +176,7 @@ public class BackgroundWorker extends AsyncTask<String,Void,String> {
                 Toast.makeText(context,result,Toast.LENGTH_LONG).show();
                 Intent in = new Intent(context.getApplicationContext(), Login.class);
                 context.startActivity(in);
+                context.finish();
             }else if(result.equals("user_already")){
                 AlertDialog alertDialog = new AlertDialog.Builder(context).create();
                 alertDialog.setTitle("SignUp Status");
@@ -173,16 +192,11 @@ public class BackgroundWorker extends AsyncTask<String,Void,String> {
                 alertDialog.setTitle("SignUp Status");
                 alertDialog.setMessage("Check your network connection");
                 alertDialog.show();
-
             }
-        }else if(type.equals("new_dog")){
+        }else if(type.equals("suggestion")){
             if(result==null){
                 result="Problem in the Server";
-            }else if(result.equals("dog add successful")){
-                Toast.makeText(context,result,Toast.LENGTH_LONG).show();
-                Intent in = new Intent(context.getApplicationContext(), Suggesions.class);
-                context.startActivity(in);
-            }else if(result.equals("dog add not successful")){
+            }else if(result.equals("0")){
                 AlertDialog alertDialog = new AlertDialog.Builder(context).create();
                 alertDialog.setTitle("Dog Add Status");
                 alertDialog.setMessage("dog add not successful");
@@ -192,9 +206,25 @@ public class BackgroundWorker extends AsyncTask<String,Void,String> {
                 alertDialog.setTitle("Dog Add Status");
                 alertDialog.setMessage("Check your network connection");
                 alertDialog.show();
+            }else{
+                String no_of_suggesions = result.split("-")[0];
+                String suggested_ids = result.split("-")[1];
+                Intent in = new Intent(context.getApplicationContext(), Suggesions.class);
+                String suggesions[]={no_of_suggesions,suggested_ids};
+                in.putExtra("suggesions", suggesions);
+                context.startActivity(in);
+                context.finish();
+            }
+        }else if(type.equals("getImage")){
+            if(result==null){
+                result="Problem in the Server";
+            }else{
+                ImageView image= (ImageView)context.findViewById(R.id.suggestedimage);
+                byte[] decodedString= Base64.decode(result, Base64.DEFAULT);
+                Bitmap imageBitmap = BitmapFactory.decodeByteArray(decodedString,0,decodedString.length);
+                image.setImageBitmap(imageBitmap);
             }
         }
-
     }
 
     @Override

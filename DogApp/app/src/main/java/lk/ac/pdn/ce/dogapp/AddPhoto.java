@@ -231,6 +231,7 @@ public class AddPhoto extends Activity {
                 ContributeFragment.dog.setDateTime(dateTime);
                 Intent in = new Intent(v.getContext().getApplicationContext(), DogDetails.class);
                 startActivity(in);
+                AddPhoto.this.finish();
             }
         });
 

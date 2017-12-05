@@ -1,5 +1,7 @@
 package lk.ac.pdn.ce.dogapp;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -23,6 +25,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Base64;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
@@ -128,6 +131,7 @@ public class AddPhoto extends Activity {
         Bitmap bitmap = BitmapFactory.decodeFile(mCurrentPhotoPath, bmOptions);
 		
 		/* Associate the Bitmap to the ImageView */
+        encodeAndAdd(bitmap);
         mImageView.setImageBitmap(bitmap);
         mImageView.setVisibility(View.VISIBLE);
     }
@@ -158,7 +162,6 @@ public class AddPhoto extends Activity {
                     mCurrentPhotoPath = null;
                 }
                 break;
-
             default:
                 break;
         } // switch
@@ -172,7 +175,6 @@ public class AddPhoto extends Activity {
         if (mCurrentPhotoPath != null) {
             setPic();
             galleryAddPic();
-            ContributeFragment.dog.setMainLocalPhotoAddress(mCurrentPhotoPath);
             mCurrentPhotoPath = null;
         }
 
@@ -247,9 +249,9 @@ public class AddPhoto extends Activity {
                 if(resultCode == RESULT_OK){
                     try {
                         final Uri imageUri = data.getData();
-                        ContributeFragment.dog.setMainLocalPhotoAddress(imageUri.toString());
                         final InputStream imageStream = getContentResolver().openInputStream(imageUri);
                         final Bitmap selectedImage = BitmapFactory.decodeStream(imageStream);
+                        encodeAndAdd(selectedImage);
                         mImageView.setImageBitmap(selectedImage);
                     } catch (FileNotFoundException e) {
                         e.printStackTrace();
@@ -314,15 +316,14 @@ public class AddPhoto extends Activity {
             }
         }
 
-        private String getRealPathFromURI(Uri contentUri) {
-            String[] proj = { MediaStore.Images.Media.DATA };
-            CursorLoader loader = new CursorLoader(this, contentUri, proj, null, null, null);
-            Cursor cursor =loader.loadInBackground();
-            int column_index= cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
-            cursor.moveToFirst();
-            String result = cursor.getString(column_index);
-            cursor.close();
-            return result;
+        private void encodeAndAdd(Bitmap selectedImage) {
+            //encoding to send
+            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+            selectedImage.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
+            byte[] byteArray = byteArrayOutputStream.toByteArray();
+            String encodedImage = Base64.encodeToString(byteArray, Base64.DEFAULT);
+            ContributeFragment.dog.setMainLocalPhoto(encodedImage);
+            //encode assign to dog over
         }
 
     }

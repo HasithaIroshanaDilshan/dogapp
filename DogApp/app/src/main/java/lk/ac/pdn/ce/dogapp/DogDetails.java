@@ -62,7 +62,7 @@ public class DogDetails extends ActionBarActivity {
                 ContributeFragment.dog.setType(spStray.getSelectedItem().toString());
                 String type= "new_dog";
                 BackgroundWorker backgroundWorker = new BackgroundWorker(DogDetails.this);
-                backgroundWorker.execute(type,""+ContributeFragment.dog.getLocationLatitude(),""+ ContributeFragment.dog.getLocationLongitude(), ContributeFragment.dog.getMainLocalPhotoAddress(), ContributeFragment.dog.getColorCode(),ContributeFragment.dog.getSize(),ContributeFragment.dog.getType(),ContributeFragment.dog.getDateTime());
+                backgroundWorker.execute(type,""+ContributeFragment.dog.getLocationLatitude(),""+ ContributeFragment.dog.getLocationLongitude(), ContributeFragment.dog.getMainLocalPhoto(), ContributeFragment.dog.getColorCode(),ContributeFragment.dog.getSize(),ContributeFragment.dog.getType(),ContributeFragment.dog.getDateTime());
             }
         });
 

@@ -9,7 +9,7 @@ public class Dog {
     private int id;
     private double locationLatitude;
     private double locationLongitude;
-    private String mainLocalPhotoAddress;
+    private String mainLocalPhoto;
     private String colorCode;
     private String size;
     private String type;
@@ -20,7 +20,7 @@ public class Dog {
 
 
 
-    public Dog(int id, double locationLatitude, double locationLongitude, String colorCode, String size, String type, String dateTime,String mainLocalPhotoAddress) {
+    public Dog(int id, double locationLatitude, double locationLongitude, String colorCode, String size, String type, String dateTime,String mainLocalPhoto) {
         this.id = id;
         this.locationLatitude = locationLatitude;
         this.locationLongitude = locationLongitude;
@@ -28,7 +28,7 @@ public class Dog {
         this.size = size;
         this.type = type;
         this.dateTime = dateTime;
-        this.mainLocalPhotoAddress=mainLocalPhotoAddress;
+        this.mainLocalPhoto=mainLocalPhoto;
     }
 
     public int getId() {
@@ -87,11 +87,11 @@ public class Dog {
         this.dateTime = dateTime;
     }
 
-    public String getMainLocalPhotoAddress() {
-        return mainLocalPhotoAddress;
+    public String getMainLocalPhoto() {
+        return mainLocalPhoto;
     }
 
-    public void setMainLocalPhotoAddress(String mainLocalPhotoAddress) {
-        this.mainLocalPhotoAddress = mainLocalPhotoAddress;
+    public void setMainLocalPhoto(String mainLocalPhoto) {
+        this.mainLocalPhoto = mainLocalPhoto;
     }
 }

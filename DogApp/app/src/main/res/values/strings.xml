@@ -38,4 +38,5 @@
         <item>Pet</item>
     </string-array>
     <string name="title_activity_splash">Splash</string>
+    <string name="title_activity_suggesions">Suggesions</string>
 </resources>

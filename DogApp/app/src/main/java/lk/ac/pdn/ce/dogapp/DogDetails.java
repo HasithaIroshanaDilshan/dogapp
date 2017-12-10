@@ -56,7 +56,6 @@ public class DogDetails extends ActionBarActivity {
         nextbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 ContributeFragment.dog.setColorCode((radioColor[0].isChecked()?"W":"")+(radioColor[1].isChecked()?"R":"")+(radioColor[2].isChecked()?"G":"")+(radioColor[3].isChecked()?"B":""));
                 ContributeFragment.dog.setSize(spSize.getSelectedItem().toString());
                 ContributeFragment.dog.setType(spStray.getSelectedItem().toString());

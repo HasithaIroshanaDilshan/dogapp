@@ -86,9 +86,9 @@ public class MainPage extends ActionBarActivity
             SharedPreferences sharedPreferences = getSharedPreferences("login",MODE_PRIVATE);
             sharedPreferences.edit().putString("uname","").apply();
             sharedPreferences.edit().putString("id","").apply();
-            Intent in = new Intent(getApplicationContext(), Login.class);
-            startActivity(in);
-            finish();
+            String type= "log_out";
+            BackgroundWorker backgroundWorker = new BackgroundWorker(MainPage.this);
+            backgroundWorker.execute(type, userData[0], userData[1]);
         }
 
     }

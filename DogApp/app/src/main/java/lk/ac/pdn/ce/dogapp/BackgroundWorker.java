@@ -3,11 +3,13 @@ package lk.ac.pdn.ce.dogapp;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
+import android.provider.Settings;
 import android.util.Base64;
 import android.view.View;
 import android.widget.ImageView;
@@ -34,6 +36,8 @@ public class BackgroundWorker extends AsyncTask<String,Void,String> {
     Activity context;
     String username;
     String type;
+    String login_id;
+    String login_uname;
 
     public BackgroundWorker(Activity context) {
         this.context = context;
@@ -46,6 +50,8 @@ public class BackgroundWorker extends AsyncTask<String,Void,String> {
         String sign_up_url ="http://192.168.43.12/dogapp/signup.php";
         String suggesion_url ="http://192.168.43.12/dogapp/getsuggesion.php";
         String getImage_url ="http://192.168.43.12/dogapp/getimage.php";
+        String checklogin_url = "http://192.168.43.12/dogapp/checklogin.php";
+        String logout_url = "http://192.168.43.12/dogapp/logout.php";
 
         if(type.equals("login")){
             username = params[1];
@@ -53,6 +59,30 @@ public class BackgroundWorker extends AsyncTask<String,Void,String> {
             try {
                 String post_data = URLEncoder.encode("username","UTF-8")+"="+URLEncoder.encode(username,"UTF-8")+"&"+URLEncoder.encode("password","UTF-8")+"="+URLEncoder.encode(password,"UTF-8");
                 return ioFunction(login_url,post_data);
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+                return "network problem";
+            }
+        }else if(type.equals("log_out")) {
+            String id = params[2];
+            String uname = params[1];
+            try {
+                String post_data = URLEncoder.encode("id", "UTF-8") + "=" + URLEncoder.encode(id, "UTF-8") + "&" + URLEncoder.encode("username", "UTF-8") + "=" + URLEncoder.encode(uname, "UTF-8");
+                return ioFunction(logout_url, post_data);
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+                return "network problem";
+            }
+        }else if(type.equals("check_login")) {
+            login_id = params[1];
+            login_uname = params[2];
+            try {
+                String post_data = URLEncoder.encode("id", "UTF-8") + "=" + URLEncoder.encode(login_id, "UTF-8") + "&" + URLEncoder.encode("username", "UTF-8") + "=" + URLEncoder.encode(login_uname, "UTF-8");
+                return ioFunction(checklogin_url, post_data);
             } catch (MalformedURLException e) {
                 e.printStackTrace();
             } catch (IOException e) {
@@ -88,6 +118,7 @@ public class BackgroundWorker extends AsyncTask<String,Void,String> {
                         "&"+URLEncoder.encode("size","UTF-8")+"="+URLEncoder.encode(size,"UTF-8")+
                         "&"+URLEncoder.encode("type","UTF-8")+"="+URLEncoder.encode(type,"UTF-8")+
                         "&"+URLEncoder.encode("date","UTF-8")+"="+URLEncoder.encode(date,"UTF-8");
+
                 return ioFunction(suggesion_url,post_data);
             } catch (MalformedURLException e) {
                 e.printStackTrace();
@@ -143,32 +174,89 @@ public class BackgroundWorker extends AsyncTask<String,Void,String> {
     @Override
     protected void onPostExecute(String result) {
         TextView pwordtxt=(TextView)context.findViewById(R.id.pwordtxt);
-        if(type.equals("login")){
-            if(result==null){
-                result="Problem in the Server";
-            }else if(result.split(",")[0].equals("login success")){
-                Toast.makeText(context,"login success...",Toast.LENGTH_LONG).show();
+        if(type.equals("login")) {
+            if (result == null) {
+                result = "Problem in the Server";
+            } else if (result.split(",")[0].equals("login success")) {
+                Toast.makeText(context, "login success...", Toast.LENGTH_LONG).show();
                 Intent in = new Intent(context.getApplicationContext(), MainPage.class);
-                String userData[]={username,result.split(",")[1]};
+                String userData[] = {username, result.split(",")[1]};
                 in.putExtra("userData", userData);
-                SharedPreferences sharedPreferences = context.getSharedPreferences("login",context.MODE_PRIVATE);
-                sharedPreferences.edit().putString("uname",username).apply();
-                sharedPreferences.edit().putString("id",userData[1]).apply();
+                SharedPreferences sharedPreferences = context.getSharedPreferences("login", context.MODE_PRIVATE);
+                sharedPreferences.edit().putString("uname", username).apply();
+                sharedPreferences.edit().putString("id", userData[1]).apply();
                 context.startActivity(in);
                 context.finish();
-            }else if(result.equals("login not success")){
+            } else if (result.equals("login not success")) {
                 AlertDialog alertDialog = new AlertDialog.Builder(context).create();
                 alertDialog.setTitle("Login Status");
                 alertDialog.setMessage("Access Denied!!");
                 alertDialog.show();
                 pwordtxt.setText("");
-            }else if(result.equals("network problem")){
+            } else if (result.equals("network problem")) {
+                AlertDialog alertDialog = new AlertDialog.Builder(context).create();
+                alertDialog.setTitle("Login Status");
+                alertDialog.setMessage("Check your network connection");
+                alertDialog.show();
+                pwordtxt.setText("");
+            }else if (result.equals("error")) {
+                AlertDialog alertDialog = new AlertDialog.Builder(context).create();
+                alertDialog.setTitle("Login Status");
+                alertDialog.setMessage("Error making logged in status");
+                alertDialog.show();
+                pwordtxt.setText("");
+            }
+        }else if(type.equals("log_out")){
+            if(result==null){
+                result="Problem in the Server";
+            }
+            else if(result.equals("ok")){
+                Toast.makeText(context,"Successfully Logged Out",Toast.LENGTH_LONG).show();
+                Intent in = new Intent(context.getApplicationContext(), Login.class);
+                context.startActivity(in);
+                context.finish();
+            }else if(result.equals("error")){
+                AlertDialog alertDialog = new AlertDialog.Builder(context).create();
+                alertDialog.setTitle("Logout Status");
+                alertDialog.setMessage("Log Out Not Successfull");
+                alertDialog.show();
+            }else if (result.equals("network problem")) {
                 AlertDialog alertDialog = new AlertDialog.Builder(context).create();
                 alertDialog.setTitle("Login Status");
                 alertDialog.setMessage("Check your network connection");
                 alertDialog.show();
                 pwordtxt.setText("");
             }
+
+        }else if(type.equals("check_login")){
+            if(result==null){
+                result="Problem in the Server";
+            }
+            else if(result.equals("logged")){
+                Intent in = new Intent(context.getApplicationContext(), MainPage.class);
+                String userData[]={login_uname,""+login_id};
+                in.putExtra("userData",userData);
+                context.startActivity(in);
+                context.finish();
+            }else if(result.equals("not_logged")){
+                Intent in = new Intent(context.getApplicationContext(), Login.class);
+                context.startActivity(in);
+                context.finish();
+            }else if(result.equals("network problem")) {
+                AlertDialog.Builder alertDialog = new AlertDialog.Builder(context);
+                alertDialog.setTitle("Network");
+                alertDialog.setMessage("Check your network connection and try again");
+
+
+                // on pressing ok
+                alertDialog.setNegativeButton("OK", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        System.exit(0);
+                    }
+                });
+                alertDialog.show();
+            }
+
         }else if(type.equals("sign_up")){
             if(result==null){
                 result="Problem in the Server";
@@ -192,6 +280,7 @@ public class BackgroundWorker extends AsyncTask<String,Void,String> {
                 alertDialog.setTitle("SignUp Status");
                 alertDialog.setMessage("Check your network connection");
                 alertDialog.show();
+
             }
         }else if(type.equals("suggestion")){
             if(result==null){

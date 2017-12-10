@@ -31,11 +31,9 @@ public class Splash extends Activity {
                     startActivity(in);
                     finish();
                 }else{
-                    Intent in = new Intent(getApplicationContext(), MainPage.class);
-                    String userData[]={uname,""+id};
-                    in.putExtra("userData",userData);
-                    startActivity(in);
-                    finish();
+                    String type= "check_login";
+                    BackgroundWorker backgroundWorker = new BackgroundWorker(Splash.this);
+                    backgroundWorker.execute(type, id, uname);
                 }
             }
         },SPLASH_TIME);

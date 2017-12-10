@@ -57,7 +57,7 @@ public class SignUp extends ActionBarActivity {
                     alertDialog.show();
                 }else{
                     String type= "sign_up";
-                    BackgroundWorker backgroundWorker = new BackgroundWorker(thisContext);
+                    BackgroundWorker backgroundWorker = new BackgroundWorker(SignUp.this);
                     backgroundWorker.execute(type,uname,email,pword1);
                 }
 

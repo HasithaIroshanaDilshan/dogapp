@@ -52,6 +52,7 @@ public class BackgroundWorker extends AsyncTask<String,Void,String> {
         String getImage_url ="http://192.168.43.12/dogapp/getimage.php";
         String checklogin_url = "http://192.168.43.12/dogapp/checklogin.php";
         String logout_url = "http://192.168.43.12/dogapp/logout.php";
+        String verify_url = "http://192.168.43.12/dogapp/verify.php";
 
         if(type.equals("login")){
             username = params[1];
@@ -96,6 +97,18 @@ public class BackgroundWorker extends AsyncTask<String,Void,String> {
             try {
                 String post_data = URLEncoder.encode("username","UTF-8")+"="+URLEncoder.encode(signup_username,"UTF-8")+"&"+URLEncoder.encode("email","UTF-8")+"="+URLEncoder.encode(signup_email,"UTF-8")+"&"+URLEncoder.encode("password","UTF-8")+"="+URLEncoder.encode(signup_password,"UTF-8");
                 return ioFunction(sign_up_url,post_data);
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+                return "network problem";
+            }
+        }else if(type.equals("verify")) {
+            String id=params[1];
+            String verification_code=params[2];
+            try {
+                String post_data = URLEncoder.encode("id","UTF-8")+"="+URLEncoder.encode(id,"UTF-8")+"&"+URLEncoder.encode("verification_code","UTF-8")+"="+URLEncoder.encode(verification_code,"UTF-8");
+                return ioFunction(verify_url,post_data);
             } catch (MalformedURLException e) {
                 e.printStackTrace();
             } catch (IOException e) {
@@ -260,9 +273,10 @@ public class BackgroundWorker extends AsyncTask<String,Void,String> {
         }else if(type.equals("sign_up")){
             if(result==null){
                 result="Problem in the Server";
-            }else if(result.equals("signup successful")){
-                Toast.makeText(context,result,Toast.LENGTH_LONG).show();
-                Intent in = new Intent(context.getApplicationContext(), Login.class);
+            }else if(result.split(",")[0].equals("signup successful")){
+                Toast.makeText(context,"Sign Up successful. Verify to complete.",Toast.LENGTH_LONG).show();
+                Intent in = new Intent(context.getApplicationContext(), VerifySignUp.class);
+                in.putExtra("id", result.split(",")[1]);
                 context.startActivity(in);
                 context.finish();
             }else if(result.equals("user_already")){
@@ -280,8 +294,27 @@ public class BackgroundWorker extends AsyncTask<String,Void,String> {
                 alertDialog.setTitle("SignUp Status");
                 alertDialog.setMessage("Check your network connection");
                 alertDialog.show();
-
             }
+        }else if(type.equals("verify")) {
+            if(result==null){
+                result="Problem in the Server";
+            }else if(result.equals("correct")){
+                Toast.makeText(context,"Verified",Toast.LENGTH_LONG).show();
+                Intent in = new Intent(context.getApplicationContext(), Login.class);
+                context.startActivity(in);
+                context.finish();
+            }else if(result.equals("wrong")){
+                AlertDialog alertDialog = new AlertDialog.Builder(context).create();
+                alertDialog.setTitle("SignUp Status");
+                alertDialog.setMessage("Wrong Verification Code");
+                alertDialog.show();
+            }else if(result.equals("network problem")){
+                AlertDialog alertDialog = new AlertDialog.Builder(context).create();
+                alertDialog.setTitle("SignUp Status");
+                alertDialog.setMessage("Check your network connection");
+                alertDialog.show();
+            }
+
         }else if(type.equals("suggestion")){
             if(result==null){
                 result="Problem in the Server";

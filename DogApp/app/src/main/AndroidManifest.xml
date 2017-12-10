@@ -83,6 +83,10 @@
             android:name=".Suggesions"
             android:label="@string/title_activity_suggesions" >
         </activity>
+        <activity
+            android:name=".VerifySignUp"
+            android:label="@string/title_activity_verify_sign_up" >
+        </activity>
     </application>
 
 </manifest>

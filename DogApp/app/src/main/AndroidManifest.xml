@@ -87,6 +87,10 @@
             android:name=".VerifySignUp"
             android:label="@string/title_activity_verify_sign_up" >
         </activity>
+        <activity
+            android:name=".ThankActivity"
+            android:label="@string/title_activity_thank" >
+        </activity>
     </application>
 
 </manifest>

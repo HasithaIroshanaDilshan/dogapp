@@ -44,6 +44,7 @@ public class AddPhoto extends Activity {
     private static final String IMAGEVIEW_VISIBILITY_STORAGE_KEY = "imageviewvisibility";
     private ImageView mImageView;
     private Bitmap mImageBitmap;
+    private Button nextbtn;
 
     private String mCurrentPhotoPath;
 
@@ -134,6 +135,7 @@ public class AddPhoto extends Activity {
         encodeAndAdd(bitmap);
         mImageView.setImageBitmap(bitmap);
         mImageView.setVisibility(View.VISIBLE);
+        nextbtn.setEnabled(true);
     }
 
     private void galleryAddPic() {
@@ -223,7 +225,8 @@ public class AddPhoto extends Activity {
                 startActivityForResult(photoPickerIntent, SELECT_PHOTO);
             }
         });
-        Button nextbtn = (Button) findViewById(R.id.next2btn);
+        nextbtn = (Button) findViewById(R.id.next2btn);
+        nextbtn.setEnabled(false);
         nextbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -254,6 +257,7 @@ public class AddPhoto extends Activity {
                         final Bitmap selectedImage = BitmapFactory.decodeStream(imageStream);
                         encodeAndAdd(selectedImage);
                         mImageView.setImageBitmap(selectedImage);
+                        nextbtn.setEnabled(true);
                     } catch (FileNotFoundException e) {
                         e.printStackTrace();
                     }

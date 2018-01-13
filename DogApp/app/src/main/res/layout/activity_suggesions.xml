@@ -18,9 +18,15 @@
         android:textSize="25sp"
         android:textColor="#fff6fffd" />
 
+    <ProgressBar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/progressBar"
+        android:layout_gravity="center_horizontal" />
+
     <ImageView
         android:layout_width="fill_parent"
-        android:layout_height="270dp"
+        android:layout_height="220dp"
         android:id="@+id/suggestedimage"
         android:layout_gravity="center_horizontal" />
 
@@ -73,13 +79,14 @@
             android:layout_marginRight="5dp" />
 
         <Button
-            android:layout_width="80dp"
+            android:layout_width="110dp"
             android:layout_height="fill_parent"
-            android:text="May Be"
+            android:text="May be"
             android:background="@drawable/hover"
             android:id="@+id/maybebtn"
             android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp" />
+            android:layout_marginRight="5dp"
+            android:layout_weight="0.93" />
 
         <Button
             android:layout_width="80dp"

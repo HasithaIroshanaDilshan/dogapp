@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CompoundButton;
+import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.SimpleAdapter;
 import android.widget.Spinner;
@@ -19,6 +20,7 @@ import java.util.ArrayList;
 
 
 public class DogDetails extends ActionBarActivity {
+    private ProgressBar spinner;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +36,9 @@ public class DogDetails extends ActionBarActivity {
         ArrayAdapter<CharSequence> adapter2 = ArrayAdapter.createFromResource(this,R.array.stray,R.layout.my_spinner_item);
         adapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spStray.setAdapter(adapter2);
+
+        spinner = (ProgressBar)findViewById(R.id.progressBar1);
+        spinner.setVisibility(View.GONE);
 
         final RadioButton []radioColor = {(RadioButton)findViewById(R.id.radioButton),(RadioButton)findViewById(R.id.radioButton2),(RadioButton)findViewById(R.id.radioButton3),(RadioButton)findViewById(R.id.radioButton4)};
         for(int i=0;i<4;i++) {
@@ -61,8 +66,9 @@ public class DogDetails extends ActionBarActivity {
                 ContributeFragment.dog.setType(spStray.getSelectedItem().toString());
                 String type= "suggestion";
                 BackgroundWorker backgroundWorker = new BackgroundWorker(DogDetails.this);
-                backgroundWorker.execute(type,""+ContributeFragment.dog.getLocationLatitude(),""+ ContributeFragment.dog.getLocationLongitude(), ContributeFragment.dog.getMainLocalPhoto(), ContributeFragment.dog.getColorCode(),ContributeFragment.dog.getSize(),ContributeFragment.dog.getType(),ContributeFragment.dog.getDateTime());
-
+                spinner.setVisibility(View.VISIBLE);
+                backgroundWorker.execute(type, "" + ContributeFragment.dog.getLocationLatitude(), "" + ContributeFragment.dog.getLocationLongitude(), ContributeFragment.dog.getMainLocalPhoto(), ContributeFragment.dog.getColorCode(), ContributeFragment.dog.getSize(), ContributeFragment.dog.getType(), ContributeFragment.dog.getDateTime());
+                spinner.setVisibility(View.GONE);
             }
         });
 

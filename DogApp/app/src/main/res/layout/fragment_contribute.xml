@@ -111,30 +111,35 @@
 
     </LinearLayout>
 
-    <TextView
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="*,*"
-        android:id="@+id/location"
-        android:layout_gravity="center"
         android:layout_marginTop="30dp"
-        android:textSize="20dp"
-        android:textColor="#ff90fff3" />
+        android:weightSum="1">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="65dp"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:id="@+id/location"
+            android:textSize="20dp"
+            android:textColor="#ff90fff3" />
+
+    </LinearLayout>
 
     <Button
         android:layout_width="159dp"
         android:layout_height="wrap_content"
         android:text="Next"
         android:id="@+id/next1btn"
-        android:layout_gravity="right"
+        android:layout_gravity="center_horizontal"
         android:layout_weight="0.08"
-        android:layout_marginTop="30dp"
-        android:layout_marginRight="45dp"
+        android:layout_marginRight="0dp"
         android:background="@drawable/nextbtnstyle"
         android:textStyle="bold"
-        android:textSize="20dp" />
-
+        android:textSize="20dp"
+        android:layout_marginTop="10dp" />
 
 
 </LinearLayout>

@@ -53,6 +53,7 @@ public class BackgroundWorker extends AsyncTask<String,Void,String> {
         String checklogin_url = "http://192.168.43.12/dogapp/checklogin.php";
         String logout_url = "http://192.168.43.12/dogapp/logout.php";
         String verify_url = "http://192.168.43.12/dogapp/verify.php";
+        String yes_maybe_url = "http://192.168.43.12/dogapp/yes_maybe.php";
 
         if(type.equals("login")){
             username = params[1];
@@ -130,6 +131,7 @@ public class BackgroundWorker extends AsyncTask<String,Void,String> {
                         "&"+URLEncoder.encode("colorCode","UTF-8")+"="+URLEncoder.encode(colorCode,"UTF-8")+
                         "&"+URLEncoder.encode("size","UTF-8")+"="+URLEncoder.encode(size,"UTF-8")+
                         "&"+URLEncoder.encode("type","UTF-8")+"="+URLEncoder.encode(type,"UTF-8")+
+                        "&"+URLEncoder.encode("user","UTF-8")+"="+URLEncoder.encode(MainPage.userData[1],"UTF-8")+
                         "&"+URLEncoder.encode("date","UTF-8")+"="+URLEncoder.encode(date,"UTF-8");
 
                 return ioFunction(suggesion_url,post_data);
@@ -144,6 +146,30 @@ public class BackgroundWorker extends AsyncTask<String,Void,String> {
             try{
                 String post_data = URLEncoder.encode("image_id","UTF-8")+"="+URLEncoder.encode(image_id,"UTF-8");
                 return ioFunction(getImage_url,post_data);
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+                return "network problem";
+            }
+        }else if(type.equals("yes")) {
+            String yes_id = params[1];
+            String id_saved = params[2];
+            try {
+                String post_data = URLEncoder.encode("type","UTF-8")+"="+URLEncoder.encode("yes","UTF-8")+"&"+URLEncoder.encode("id", "UTF-8") + "=" + URLEncoder.encode(yes_id, "UTF-8")+"&"+URLEncoder.encode("id_saved", "UTF-8") + "=" + URLEncoder.encode(id_saved, "UTF-8");
+                return ioFunction(yes_maybe_url, post_data);
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+                return "network problem";
+            }
+        }else if(type.equals("maybe")) {
+            String maybeid = params[1];
+            String id_saved = params[2];
+            try {
+                String post_data =  URLEncoder.encode("type","UTF-8")+"="+URLEncoder.encode("maybe","UTF-8")+"&"+URLEncoder.encode("id", "UTF-8") + "=" + URLEncoder.encode(maybeid, "UTF-8")+"&"+URLEncoder.encode("id_saved", "UTF-8") + "=" + URLEncoder.encode(id_saved, "UTF-8");;
+                return ioFunction(yes_maybe_url, post_data);
             } catch (MalformedURLException e) {
                 e.printStackTrace();
             } catch (IOException e) {
@@ -218,6 +244,11 @@ public class BackgroundWorker extends AsyncTask<String,Void,String> {
                 alertDialog.setMessage("Error making logged in status");
                 alertDialog.show();
                 pwordtxt.setText("");
+            }else if(result.split(",")[0].equals("not verified")){
+                Intent in = new Intent(context.getApplicationContext(), VerifySignUp.class);
+                in.putExtra("id", result.split(",")[1]);
+                context.startActivity(in);
+                Toast.makeText(context,"Verify your account to complete.",Toast.LENGTH_LONG).show();
             }
         }else if(type.equals("log_out")){
             if(result==null){
@@ -321,18 +352,24 @@ public class BackgroundWorker extends AsyncTask<String,Void,String> {
             }else if(result.equals("0")){
                 AlertDialog alertDialog = new AlertDialog.Builder(context).create();
                 alertDialog.setTitle("Dog Add Status");
-                alertDialog.setMessage("dog add not successful");
+                Intent in = new Intent(context.getApplicationContext(), ThankActivity.class);
+                context.startActivity(in);
+                alertDialog.setMessage("dog added successfully");
                 alertDialog.show();
+                context.finish();
             }else if(result.equals("network problem")){
                 AlertDialog alertDialog = new AlertDialog.Builder(context).create();
                 alertDialog.setTitle("Dog Add Status");
                 alertDialog.setMessage("Check your network connection");
                 alertDialog.show();
             }else{
-                String no_of_suggesions = result.split("-")[0];
+                //have suggestions
+                // dog is added
+                String no_of_suggesions = (result.split("-")[0]).split(",")[0];
+                String id_of_saved = (result.split("-")[0]).split(",")[1];
                 String suggested_ids = result.split("-")[1];
                 Intent in = new Intent(context.getApplicationContext(), Suggesions.class);
-                String suggesions[]={no_of_suggesions,suggested_ids};
+                String suggesions[]={id_of_saved,no_of_suggesions,suggested_ids};
                 in.putExtra("suggesions", suggesions);
                 context.startActivity(in);
                 context.finish();
@@ -345,6 +382,27 @@ public class BackgroundWorker extends AsyncTask<String,Void,String> {
                 byte[] decodedString= Base64.decode(result, Base64.DEFAULT);
                 Bitmap imageBitmap = BitmapFactory.decodeByteArray(decodedString,0,decodedString.length);
                 image.setImageBitmap(imageBitmap);
+            }
+        }else if(type.equals("yes") || type.equals("maybe")) {
+            if (result == null) {
+                result = "Problem in the Server";
+            } else if (result.equals("ok")) {
+                Toast.makeText(context, "Successfull", Toast.LENGTH_LONG).show();
+                Intent in = new Intent(context.getApplicationContext(), ThankActivity.class);
+                context.startActivity(in);
+                context.finish();
+            } else if (result.equals("error")) {
+                AlertDialog alertDialog = new AlertDialog.Builder(context).create();
+                alertDialog.setTitle("Error");
+                alertDialog.setMessage("Error, Dog not added");
+                alertDialog.show();
+            } else if (result.equals("network problem")) {
+                AlertDialog alertDialog = new AlertDialog.Builder(context).create();
+                alertDialog.setTitle("SignUp Status");
+                alertDialog.setMessage("Check your network connection");
+                alertDialog.show();
+            }
+            else {
             }
         }
     }

@@ -22,7 +22,7 @@
         android:layout_width="265dp"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="What are it&apos;s Colors?"
+        android:text="Pick the dog&apos;s colors"
         android:id="@+id/textView10"
         android:layout_marginLeft="16dp"
         android:textColor="#ff80acff"
@@ -151,6 +151,14 @@
         android:background="@drawable/nextbtnstyle"
         android:textStyle="bold"
         android:textSize="20dp" />
+    <ProgressBar
+        android:id="@+id/progressBar1"
+        style="?android:attr/progressBarStyleLarge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="center_horizontal"
+        android:indeterminate="false" />
 
 </LinearLayout>
 

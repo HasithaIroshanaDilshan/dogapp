@@ -1,0 +1,62 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    tools:context="lk.ac.pdn.ce.dogapp.ThankActivity"
+    android:orientation="vertical"
+    android:background="#d4383838">
+
+    <ImageView
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:id="@+id/imageView2"
+        android:src="@drawable/thanks"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:layout_gravity="center_horizontal" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Thank You"
+        android:id="@+id/textView20"
+        android:textColor="#ff14ff08"
+        android:textStyle="bold"
+        android:textSize="40dp"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="10dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="for contributing towards the dog population aproximation project. This is needed for the future projects against rabies and dog related problems."
+        android:id="@+id/textView21"
+        android:layout_marginTop="10dp"
+        android:textColor="#ffbcd7c3" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Do more Contributions also see your points at My Profile in main page navigation bar."
+        android:id="@+id/textView23"
+        android:layout_gravity="center_horizontal"
+        android:textColor="#ffe3fd3c"
+        android:autoText="false" />
+
+    <Button
+        android:layout_width="289dp"
+        android:layout_height="wrap_content"
+        android:text="Got It , Go to MainPage "
+        android:id="@+id/mainpagebtn"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="15dp"
+        android:background="#ff65b91c" />
+</LinearLayout>

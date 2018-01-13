@@ -9,6 +9,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 
@@ -16,6 +18,7 @@ public class Suggesions extends ActionBarActivity {
     int no_of_suggesions;
     String suggesions[];
     static int currentId;
+    static String id_of_saved;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,9 +28,12 @@ public class Suggesions extends ActionBarActivity {
         currentId=0;
         Intent loginIntent = getIntent();
         String [] suggesionsAr= loginIntent.getExtras().getStringArray("suggesions");
-        no_of_suggesions=Integer.parseInt(suggesionsAr[0]);
-        suggesions=suggesionsAr[1].split(",");
+        id_of_saved=suggesionsAr[0];
+        no_of_suggesions=Integer.parseInt(suggesionsAr[1]);
+        suggesions=suggesionsAr[2].split(",");
+        final TextView txtView = (TextView)findViewById(R.id.id);
         final String type ="getImage";
+        txtView.setText(""+(currentId+1) +" of "+no_of_suggesions );
         final BackgroundWorker backgroundWorker = new BackgroundWorker(this);
         backgroundWorker.execute(type, "" + suggesions[currentId]);
 
@@ -36,16 +42,37 @@ public class Suggesions extends ActionBarActivity {
             @Override
             public void onClick(View v) {
                 Suggesions.currentId++;
-                if(currentId<no_of_suggesions){
+                if (currentId < no_of_suggesions) {
+                    txtView.setText(""+(currentId+1) +" of "+no_of_suggesions );
                     BackgroundWorker newbackgroundWorker = new BackgroundWorker(Suggesions.this);
                     newbackgroundWorker.execute(type, "" + suggesions[currentId]);
-                }else{
-                    String msg="SUCCESSFUL!!.Dog saved as a new Dog";
+                } else {
+                    Intent in = new Intent(getApplicationContext(), ThankActivity.class);
+                    startActivity(in);
+                    String msg = "SUCCESSFUL!!.Dog saved as a new Dog";
                     Toast.makeText(Suggesions.this, msg, Toast.LENGTH_LONG).show();
-                    startActivity(MainPage.getMainIntent());
-                    Suggesions.this.finish();
+                    finish();
                 }
 
+            }
+        });
+        Button yesbtn=(Button)findViewById(R.id.yesbtn);
+        yesbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String type2 ="yes";
+                BackgroundWorker newbackgroundWorker = new BackgroundWorker(Suggesions.this);
+                newbackgroundWorker.execute(type2, "" + suggesions[currentId],id_of_saved);
+            }
+        });
+
+        Button maybebtn=(Button)findViewById(R.id.maybebtn);
+        maybebtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String type3 ="maybe";
+                BackgroundWorker newbackgroundWorker = new BackgroundWorker(Suggesions.this);
+                newbackgroundWorker.execute(type3, "" + suggesions[currentId],id_of_saved);
             }
         });
 

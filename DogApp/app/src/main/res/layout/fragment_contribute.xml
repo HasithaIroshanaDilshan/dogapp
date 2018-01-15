@@ -119,12 +119,13 @@
         android:weightSum="1">
 
         <TextView
-            android:layout_width="match_parent"
+            android:layout_width="347dp"
             android:layout_height="65dp"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:id="@+id/location"
-            android:textSize="20dp"
-            android:textColor="#ff90fff3" />
+            android:textSize="15dp"
+            android:textColor="#ff90fff3"
+            android:layout_marginLeft="17dp" />
 
     </LinearLayout>
 

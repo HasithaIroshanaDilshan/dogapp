@@ -13,18 +13,23 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.logging.Handler;
+import java.util.logging.LogRecord;
+
 
 public class Suggesions extends ActionBarActivity {
     int no_of_suggesions;
     String suggesions[];
     static int currentId;
     static String id_of_saved;
+    ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_suggesions);
 
+        progressBar = (ProgressBar)findViewById(R.id.progressBar);
         currentId=0;
         Intent loginIntent = getIntent();
         String [] suggesionsAr= loginIntent.getExtras().getStringArray("suggesions");
@@ -36,6 +41,7 @@ public class Suggesions extends ActionBarActivity {
         txtView.setText(""+(currentId+1) +" of "+no_of_suggesions );
         final BackgroundWorker backgroundWorker = new BackgroundWorker(this);
         backgroundWorker.execute(type, "" + suggesions[currentId]);
+        progressBar.setProgress((int)((1.0 / (double) no_of_suggesions) * 100));
 
         Button nobtn=(Button)findViewById(R.id.nobtn);
         nobtn.setOnClickListener(new View.OnClickListener() {
@@ -43,9 +49,10 @@ public class Suggesions extends ActionBarActivity {
             public void onClick(View v) {
                 Suggesions.currentId++;
                 if (currentId < no_of_suggesions) {
-                    txtView.setText(""+(currentId+1) +" of "+no_of_suggesions );
+                    txtView.setText("" + (currentId + 1) + " of " + no_of_suggesions);
                     BackgroundWorker newbackgroundWorker = new BackgroundWorker(Suggesions.this);
                     newbackgroundWorker.execute(type, "" + suggesions[currentId]);
+                    progressBar.setProgress((int)(((double)(currentId+1) / (double) no_of_suggesions) * 100));
                 } else {
                     Intent in = new Intent(getApplicationContext(), ThankActivity.class);
                     startActivity(in);

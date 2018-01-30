@@ -1,0 +1,78 @@
+<html>
+<body>
+
+<h1>Dog Population Map</h1>
+
+<div id="map" style="width:100%;height:90%;background:yellow"></div>
+
+<script>
+function myMap() {
+var mapOptions = {
+    center: new google.maps.LatLng(7.2549661,80.5947912),
+    zoom: 9,
+    mapTypeId: google.maps.MapTypeId.roadmap
+}
+var map = new google.maps.Map(document.getElementById("map"), mapOptions);
+
+
+
+
+        var features = [
+          {
+            position: new google.maps.LatLng(7.2549661,80.5947912),
+            type: 'info'
+          }, {
+            position: new google.maps.LatLng(8.2549661,80.5947912),
+            type: 'info'
+          }, {
+            position: new google.maps.LatLng(9.2549661,80.5947912),
+            type: 'info'
+          }, {
+            position: new google.maps.LatLng(9.2549661,80.1947912),
+            type: 'info'
+          }, {
+            position: new google.maps.LatLng(7.2549661,80.0947912),
+            type: 'info'
+          }, {
+            position: new google.maps.LatLng(8.2549661,80.9947912),
+            type: 'info'
+          }, {
+            position: new google.maps.LatLng(7.2549661,81.5947912),
+            type: 'info'
+          }
+        ];
+
+        // Create markers.
+        var image ='dot.png';
+        features.forEach(function(feature) {
+          var marker = new google.maps.Marker({
+            position: feature.position,
+            icon: image, //icons[feature.type].icon,
+            map: map
+          });
+        });
+      }
+    </script>
+    
+    
+    
+    
+    
+  
+
+
+
+
+
+
+
+
+
+
+
+
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAurM6wxlyeuMtNiFPZ6k642FmpsX7vS04&callback=myMap"></script>
+
+
+</body>
+</html>

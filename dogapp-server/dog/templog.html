@@ -1,0 +1,116 @@
+<html>
+<head>
+    
+     <style>
+    .header img{
+        /*border:0;*/
+        /*background-color: peru;*/
+     }
+     
+    .header {
+       background-color: firebrick;
+    }
+ 
+    .header h1,h2 {
+        
+        position: relative;
+        left: 10px;
+     }
+    
+    form {
+        border: 3px solid #f1f1f1;
+        margin: auto;
+        width: 216px;
+    }
+     
+    .login_detail {
+    margin: auto;
+    /*width: 60%;*/
+    /*border: 3px solid #73AD21;*/
+    padding: 10px;
+    
+   }
+   
+    a.hyperlink {
+    text-decoration: none;
+    }
+    
+    input[type=text], input[type=password] {
+        width: 200px;
+        padding: 12px 20px;
+        /*margin: 8px 0;*/
+        display: inline-block;
+        border: 1px solid #ccc;
+        box-sizing: border-box;
+    }
+    
+    button {
+        background-color: #4CAF50;
+        color: white;
+        padding: 14px 20px;
+        /*margin: 8px 0;*/
+        border: none;
+        cursor: pointer;
+        width: 200px;
+    }
+     
+    
+    </style>
+    
+    
+    <div class ="header">
+        <img src ="university_logo.gif" alt="logo" width="100" height="100" style="float:left"/>
+        
+        <img  src ="dog.gif" alt="dog" width="100" height="100" style="float:right" />
+        <h1>Dog Counting Project</h1>          
+        <h2>Faculty of veterinary medicine. University of Peradeniya</h2>
+        
+        
+    </div>
+</head>
+
+
+
+
+
+
+<body>
+<br>
+
+
+<form action="log.php" method="post">
+    
+    <h2>username does not exist </h2>
+    
+    <div class="login_detail">
+        <label><b>Username</b></label>
+        <br>
+        <input type="text" placeholder="Enter Username" name="name" >
+        <br>
+        <label><b>Password</b></label>
+        <br>
+        <input type="password" placeholder="Enter Password" name="pwd" >
+        <br>
+        <input type="checkbox" checked="checked"> Remember Username
+        <br>
+        <button type="submit">Login</button>
+        <!--<p id="singnup" onclick="myFunction()">Create new account</p>-->
+        <a class ="hyperlink" href="http://localhost/dog/dog.html">Create new account</a>
+        
+    </div>
+        
+</form>
+
+
+<!--<script>
+function myFunction() {
+    window.location= "http://localhost/dog/dog.html";
+}
+</script>-->
+
+
+
+
+
+</body>
+</html>

@@ -64,7 +64,7 @@ public class CustomDrawerAdapter extends ArrayAdapter<DrawerItem> {
         else if(dItem.getType().equals("points")){
             drawerHolder.itemLayout.setMinimumHeight(100);
             drawerHolder.itemLayout.setBackgroundColor(Color.rgb(16,49,64));
-            drawerHolder.ItemName.setText("0 Points");
+            drawerHolder.ItemName.setText(""+MainPage.getPoints()+" Points");
 
         }else if(dItem.getType().equals("img")){
             drawerHolder.itemLayout.setMinimumHeight(310);

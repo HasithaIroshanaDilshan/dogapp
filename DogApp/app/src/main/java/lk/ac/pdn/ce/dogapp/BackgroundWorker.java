@@ -219,7 +219,7 @@ public class BackgroundWorker extends AsyncTask<String,Void,String> {
             } else if (result.split(",")[0].equals("login success")) {
                 Toast.makeText(context, "login success...", Toast.LENGTH_LONG).show();
                 Intent in = new Intent(context.getApplicationContext(), MainPage.class);
-                String userData[] = {username, result.split(",")[1]};
+                String userData[] = {username, result.split(",")[1], result.split(",")[2]};
                 in.putExtra("userData", userData);
                 SharedPreferences sharedPreferences = context.getSharedPreferences("login", context.MODE_PRIVATE);
                 sharedPreferences.edit().putString("uname", username).apply();
@@ -276,13 +276,13 @@ public class BackgroundWorker extends AsyncTask<String,Void,String> {
             if(result==null){
                 result="Problem in the Server";
             }
-            else if(result.equals("logged")){
+            else if(result.split(",")[0].equals("logged")){
                 Intent in = new Intent(context.getApplicationContext(), MainPage.class);
-                String userData[]={login_uname,""+login_id};
+                String userData[]={login_uname,""+login_id,result.split(",")[1]};
                 in.putExtra("userData",userData);
                 context.startActivity(in);
                 context.finish();
-            }else if(result.equals("not_logged")){
+            }else if(result.split(",")[0].equals("not_logged")){
                 Intent in = new Intent(context.getApplicationContext(), Login.class);
                 context.startActivity(in);
                 context.finish();

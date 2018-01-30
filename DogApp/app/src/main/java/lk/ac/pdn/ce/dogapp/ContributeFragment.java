@@ -48,7 +48,7 @@ public class ContributeFragment extends android.support.v4.app.Fragment{
 
 
         nextbtn = (Button) rootView.findViewById(R.id.next1btn);
-        nextbtn.setEnabled(false);
+       // nextbtn.setEnabled(false);
         nextbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -114,6 +114,7 @@ public class ContributeFragment extends android.support.v4.app.Fragment{
                         public void onProviderDisabled(String provider) {}
 
                     };
+                    locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER,0,0,locationListener);
                     locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,0,0,locationListener);
                 }
 

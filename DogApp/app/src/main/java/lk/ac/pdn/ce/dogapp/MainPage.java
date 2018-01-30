@@ -183,4 +183,12 @@ public class MainPage extends ActionBarActivity
         }
     }
 
+    static void setPoints(int newPoint){
+        //user=newPoint;
+
+    }
+    static String getPoints(){
+        return userData[2];
+    }
+
 }

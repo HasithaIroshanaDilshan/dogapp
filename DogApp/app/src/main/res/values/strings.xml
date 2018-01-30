@@ -37,8 +37,8 @@
         <item>Stray</item>
         <item>Pet</item>
     </string-array>
-    <string name="title_activity_splash">Splash</string>
+    <string name="title_activity_splash">Dog App</string>
     <string name="title_activity_suggesions">Suggesions</string>
-    <string name="title_activity_verify_sign_up">VerifySignUp</string>
-    <string name="title_activity_thank">ThankActivity</string>
+    <string name="title_activity_verify_sign_up">Verify</string>
+    <string name="title_activity_thank">Thanks</string>
 </resources>
